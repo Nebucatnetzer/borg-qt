@@ -1,0 +1,127 @@
+* Borg-Qt
+
+Borg-Qt is a Python 3 based graphical frontend for the backup tool [[https://github.com/borgbackup/borg][BorgBackup]]
+as its name implies it is using the Qt5 Framework. Currently it works only on
+Linux.
+
+** Motivation
+
+I think Borg is a great backup tool which should be available to many move
+users. Since command line tools can be a bit scary for less experienced users I
+decided to write a GUI as my "thesis" during my final semester at the IBZ
+school in Aarau, Switzerland.
+
+** Getting Started
+
+These instructions will get you a copy of the project up and running on your
+local machine for development and testing purposes. See deployment for notes on
+how to deploy the project on a live system.
+
+*** Prerequisites
+
+You need to have Borg installed in order to have Borg-Qt working. You can get a
+binary for your operating system here:
+https://github.com/borgbackup/borg/releases
+On a Debian based system you can install it by copying to ~~/.local/bin/~. Borg
+needs to be able to get executed by calling the command ~borg~.
+
+#+begin_src sh
+cp ~/Downloads/borg-linux64 ~/.local/bin/borg
+chmod +x ~/.local/bin/borg
+#+end_src
+For other systems check their [[https://borgbackup.readthedocs.io/en/stable/][documenation]].
+
+*** Installing
+
+Installing Borg-Qt is very simple. Download the binary for your operating
+system here: https://github.com/Nebucatnetzer/borg-qt/releases
+
+You can then either run it by double clicking on it or by copying it to
+~~/.local/bin/~ like Borg. If you do that you might want to create a desktop
+file for it. Puth the following code into a ~borg-qt.desktop~ file in
+~~/.local/share/applications/~.
+
+#+example
+[Desktop Entry]
+Version=1.0
+Name=Borg-Qt
+Exec=/home/username/.local/bin/borg-qt
+Terminal=false
+Type=Application
+Categories=Tools
+MimeType=x-scheme-handler/tg;
+#+example
+
+Make sure the file is executable:
+#+begin_src sh
+chmod +x ~/.local/share/applications/borg-qt.desktop
+#+end_src
+
+Now you should find Borg-Qt in your desktops start menu.
+
+** Development
+
+To start working on Borg-Qt first clone the git repository and install
+BorgBackup as described in [[Prerequisites]].
+
+#+begin_src sh
+git clone https://github.com/borg-qt/borg-qt.git
+#+end_src
+
+Now create a virtual environment.
+
+#+begin_src sh
+cd borg-qt
+python3 -m venv venv
+#+end_src
+
+And activate it.
+
+#+begin_src sh
+source venv/bin/activate
+#+end_src
+
+Finally you can install the depencies.
+
+#+begin_src sh
+pip3 install -r requirements.txt
+#+end_src
+
+You're now all set to work on Borg-Qt. It's a good idea to run the tests before
+starting. You can do this with the following command.
+
+#+begin_src sh
+python3 -m unittest
+#+end_src
+
+** Used packages
+
+- [[https://pyqt.readthedocs.io/en/latest/][PyQt5]] - the GUI framework
+- [[https://pyinstaller.readthedocs.io/en/stable/][PyInstaller]] - used for creating the binary
+
+** Contributing
+
+Since I'm currently working on this as part of my thesis I won't be able to
+accept any pull requests. After the 18th or March 2019 everybody is more than
+invited to contribute.
+
+** Versioning
+
+Currently there is no versioning as such. In the future a versioning scheme
+based on [[http://semver.org/][semantic Versioning]] might get used. However the master branch is
+considered to be the stable branch. Other branches might be highly experimental.
+
+** Authors
+
+- **Andreas Zweili** - *Initial work* - [[https://github.com/Nebucatnetzer][Nebucatnetzer]]
+
+** License
+
+This project is licensed under the GPLv3 License - see the [[file:LICENSE]] file
+for details.
+
+** Acknowledgments
+
+- Thanks to PurpleBooth for her [[https://gist.github.com/PurpleBooth/109311bb0361f32d87a2][README template]].
+- Thanks to "Back in Time" for the inspiration
+
