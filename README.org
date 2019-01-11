@@ -113,7 +113,7 @@ considered to be the stable branch. Other branches might be highly experimental.
 
 ** Authors
 
-- **Andreas Zweili** - *Initial work* - [[https://github.com/Nebucatnetzer][Nebucatnetzer]]
+- **Andreas Zweili** - /Initial work/ - [[https://github.com/Nebucatnetzer][Nebucatnetzer]]
 
 ** License
 
