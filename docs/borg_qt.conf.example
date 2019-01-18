@@ -1,0 +1,22 @@
+[DEFAULT]
+excludes = [
+    "/home/*/.gvfs/",
+    "/home/*/.cache/",
+    "/home/*/.thumbnails/",
+    "/home/*/.dropbox/",
+    "/proc/*",
+    "/sys/*",
+    "/dev/*",
+    "/etc/mtab",
+    "/var/cache/*",
+    "lost+found/*",
+    "/tmp/*",
+    "/var/tmp/*",
+    "/home/*/.local/share/Trash"
+    ]
+[borgqt]
+server = 10.7.89.117
+port = 22
+user = borg
+repository_path = /tmp/test-borgqt
+password = foo
