@@ -88,7 +88,8 @@ pip3 install -r requirements.txt
 #+end_src
 
 You're now all set to work on Borg-Qt. It's a good idea to run the tests before
-starting. You can do this with the following command.
+starting. You can do this with the following command. Run from inside the
+~tests/~ directory.
 
 #+begin_src sh
 python3 -m unittest
