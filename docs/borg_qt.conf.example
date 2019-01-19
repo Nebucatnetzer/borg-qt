@@ -14,9 +14,13 @@ excludes = [
     "/var/tmp/*",
     "/home/*/.local/share/Trash"
     ]
-[borgqt]
-server = 10.7.89.117
 port = 22
+
+[borgqt]
+includes = [
+    "/home/username/"
+    ]
+server = 192.168.1.1
 user = borg
 repository_path = /tmp/test-borgqt
 password = foo
