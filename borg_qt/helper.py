@@ -1,0 +1,2 @@
+class BorgException(Exception):
+    pass
