@@ -32,6 +32,13 @@ init:
 	borg init -e repokey-blake2; \
 	)
 
+test:
+	@. venv/bin/activate
+	@( \
+	cd tests/; \
+	python3 -m unittest; \
+	)
+
 clean: distclean
 	rm -rf build/
 	rm -rf venv/
