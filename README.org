@@ -94,6 +94,14 @@ repository.
 #+begin_src sh
 make test
 #+end_src
+
+To make testing the application while programming a bit easier there's a script
+which reloads the application everytime a file changes in the ~borg_qt~
+directory. You to use it run the following command from the root of the
+repository.
+
+#+begin_src sh
+./scripts/debugging.sh
 #+end_src
 
 ** Used packages
