@@ -8,7 +8,7 @@ dist/borg-qt: venv
 	pyinstaller --hidden-import=PyQt5.sip \
 		--add-data=borg_qt/static/icons:static/icons \
 		--add-data=borg_qt/static/UI:static/UI \
-		-F borg_qt/borg_qt; \
+		-F borg_qt/borg_qt.py; \
 	)
 
 venv: venv/bin/activate
