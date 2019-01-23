@@ -54,27 +54,11 @@
        <x>10</x>
        <y>10</y>
        <width>541</width>
-       <height>251</height>
+       <height>296</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="layout_general">
-      <item row="1" column="0" colspan="2">
-       <widget class="QLineEdit" name="line_edit_path"/>
-      </item>
-      <item row="6" column="1">
-       <widget class="QLabel" name="label_password">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Password:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
+      <item row="4" column="0">
        <widget class="QLabel" name="label_prefix">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
@@ -88,46 +72,10 @@
        </widget>
       </item>
       <item row="7" column="0">
-       <widget class="QLineEdit" name="line_edit_user"/>
+       <widget class="QLineEdit" name="line_edit_server"/>
       </item>
-      <item row="7" column="1">
-       <widget class="QLineEdit" name="line_edit_password">
-        <property name="inputMethodHints">
-         <set>Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
-        </property>
-        <property name="echoMode">
-         <enum>QLineEdit::Password</enum>
-        </property>
-        <property name="clearButtonEnabled">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLabel" name="label_port">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Port:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0">
-       <widget class="QLabel" name="label_user">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Username:</string>
-        </property>
-       </widget>
+      <item row="1" column="0" colspan="2">
+       <widget class="QLineEdit" name="line_edit_repository_path"/>
       </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label_path">
@@ -142,13 +90,23 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
+      <item row="7" column="1">
        <widget class="QLineEdit" name="line_edit_port"/>
       </item>
-      <item row="5" column="0">
-       <widget class="QLineEdit" name="line_edit_server"/>
+      <item row="6" column="1">
+       <widget class="QLabel" name="label_port">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Port:</string>
+        </property>
+       </widget>
       </item>
-      <item row="4" column="0">
+      <item row="6" column="0">
        <widget class="QLabel" name="label_server">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
@@ -161,8 +119,107 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
+      <item row="8" column="0">
+       <widget class="QLabel" name="label_user">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Username:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_password">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Password:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="QLineEdit" name="line_edit_password">
+        <property name="inputMethodHints">
+         <set>Qt::ImhNone</set>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Normal</enum>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0" colspan="2">
        <widget class="QLineEdit" name="line_edit_prefix"/>
+      </item>
+      <item row="9" column="0" colspan="2">
+       <widget class="QLineEdit" name="line_edit_user"/>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_include">
+    <attribute name="title">
+     <string>Include</string>
+    </attribute>
+    <widget class="QWidget" name="verticalLayoutWidget_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>541</width>
+       <height>331</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="layout_include">
+      <item>
+       <widget class="QListWidget" name="list_include"/>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="layout_buttons_include">
+        <item>
+         <widget class="QPushButton" name="button_include_file">
+          <property name="text">
+           <string>Add file</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>../icons/plus.svg</normaloff>../icons/plus.svg</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="button_include_directory">
+          <property name="text">
+           <string>Add folder</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>../icons/plus.svg</normaloff>../icons/plus.svg</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="button_remove_include">
+          <property name="text">
+           <string>Remove</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>../icons/minus.svg</normaloff>../icons/minus.svg</iconset>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
@@ -182,12 +239,12 @@
      </property>
      <layout class="QVBoxLayout" name="layout_exclude">
       <item>
-       <widget class="QListView" name="list_exclude"/>
+       <widget class="QListWidget" name="list_exclude"/>
       </item>
       <item>
        <layout class="QHBoxLayout" name="layout_buttons_exclude">
         <item>
-         <widget class="QPushButton" name="button_add_file">
+         <widget class="QPushButton" name="button_exclude_file">
           <property name="text">
            <string>Add file</string>
           </property>
@@ -198,7 +255,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="button_add_folder">
+         <widget class="QPushButton" name="button_exclude_directory">
           <property name="text">
            <string>Add folder</string>
           </property>
@@ -209,14 +266,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="button_add_default">
+         <widget class="QPushButton" name="button_restore_exclude_defaults">
           <property name="text">
-           <string>Add default</string>
+           <string>Restore defaults</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="button_remove_item">
+         <widget class="QPushButton" name="button_remove_exclude">
           <property name="text">
            <string>Remove</string>
           </property>
