@@ -104,6 +104,11 @@ repository.
 ./scripts/debugging.sh
 #+end_src
 
+*** ToDos
+
+To have a look at all the planned tasks you can have a look at the planned
+features here: [[file:docs/todos.org][todos.org]]
+
 ** Used packages
 
 - [[https://pyqt.readthedocs.io/en/latest/][PyQt5]] - the GUI framework
