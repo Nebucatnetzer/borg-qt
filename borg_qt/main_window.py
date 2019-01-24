@@ -4,7 +4,6 @@ from PyQt5 import uic
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QMainWindow
 
-from settings import Settings
 from config import Config
 
 
