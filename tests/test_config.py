@@ -11,7 +11,6 @@ from PyQt5.QtTest import QTest
 
 import context
 from main_window import MainWindow
-from config import Config
 from helper import BorgException
 from testcase import BorgQtTestCase
 
