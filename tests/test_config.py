@@ -13,28 +13,13 @@ import context
 from main_window import MainWindow
 from config import Config
 from helper import BorgException
+from testcase import BorgQtTestCase
 
 
 app = QApplication(sys.argv)
 
 
-def fxn():
-    warnings.warn("deprecated", DeprecationWarning)
-
-
-class BorgQtConfigTestCase(unittest.TestCase):
-    def setUp(self):
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore")
-            fxn()
-            self.form = MainWindow()
-
-        self.dir_path = os.path.dirname(os.path.realpath(__file__))
-        self.config_path = os.path.join(self.dir_path,
-                                        '../docs/borg_qt.conf.example')
-
-
-class TestConfiguration(BorgQtConfigTestCase):
+class TestConfiguration(BorgQtTestCase):
     def test_read_configuration(self):
         self.form.config._get_path = MagicMock(return_value=self.config_path)
         self.form.config.read()
@@ -73,7 +58,7 @@ class TestConfiguration(BorgQtConfigTestCase):
                          os.environ['BORG_PASSPHRASE'])
 
 
-class TestWriteConfiguration(BorgQtConfigTestCase):
+class TestWriteConfiguration(BorgQtTestCase):
     def tearDown(self):
         if os.path.exists(self.form.config.path):
             os.remove(self.form.config.path)
@@ -89,7 +74,7 @@ class TestWriteConfiguration(BorgQtConfigTestCase):
                          config['borgqt']['password'])
 
 
-class TestGuiConfiguration(BorgQtConfigTestCase):
+class TestGuiConfiguration(BorgQtTestCase):
     def setUp(self):
         super().setUp()
         self.form.config.read()
