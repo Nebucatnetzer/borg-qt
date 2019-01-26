@@ -10,11 +10,11 @@ from config import Config
 class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
-        self.setWindowTitle("Borg-Qt")
         QCoreApplication.setApplicationName("borg-qt")
         dir_path = os.path.dirname(os.path.realpath(__file__))
         ui_path = os.path.join(dir_path + '/static/UI/MainWindow.ui')
         uic.loadUi(ui_path, self)
+        self.setWindowTitle("Borg-Qt")
 
         self.config = Config()
 
