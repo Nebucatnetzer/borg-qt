@@ -4,6 +4,8 @@ import configparser
 import unittest
 from unittest.mock import MagicMock, patch
 import warnings
+from shutil import copyfile
+
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication
@@ -76,8 +78,9 @@ class TestWriteConfiguration(BorgQtTestCase):
 class TestGuiConfiguration(BorgQtTestCase):
     def setUp(self):
         super().setUp()
+        copyfile(self.config_path, '/tmp/test.conf')
+        self.form.config._get_path = MagicMock(return_value='/tmp/test.conf')
         self.form.config.read()
-        self.form.config.path = '/tmp/test.conf'
 
     def tearDown(self):
         if os.path.exists(self.form.config.path):
