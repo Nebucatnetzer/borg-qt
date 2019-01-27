@@ -9,13 +9,15 @@ from helper import BorgException
 
 
 class Config(QDialog):
+    """A class to read, display and write the Borg-Qt configuration."""
     def __init__(self):
-        # Setting all the PyQt relevant parts
         super(QDialog, self).__init__()
+        # Load the UI file to get the dialogs layout.
         dir_path = os.path.dirname(os.path.realpath(__file__))
         ui_path = os.path.join(dir_path + '/static/UI/Settings.ui')
         uic.loadUi(ui_path, self)
 
+        # Connect all the button and actions.
         self.button_box.accepted.connect(self.accept)
         self.button_include_file.clicked.connect(self.include_file)
         self.button_include_directory.clicked.connect(self.include_directory)
@@ -28,6 +30,8 @@ class Config(QDialog):
 
     @property
     def full_path(self):
+        """returns the repository path or the repository server path if a
+        server was provided in the configuration."""
         if 'repository_path' in self.config['borgqt']:
             if self.config['borgqt']['server']:
                 return self._create_server_path()
@@ -69,18 +73,22 @@ class Config(QDialog):
         return self._return_single_option('prefix')
 
     def _return_single_option(self, option):
+        """Gets the provided option from the configparser object."""
         if option in self.config['borgqt']:
             return self.config['borgqt'][option]
         else:
             return ""
 
     def _return_list_option(self, option):
+        """Reads the provided option from the configparser object and returns
+        it as a list."""
         if option in self.config['borgqt']:
             return json.loads(self.config['borgqt'][option])
         else:
             return []
 
     def _get_path(self):
+        """searches for the configuration file and returns its full path."""
         home = os.environ['HOME']
         dir_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -96,6 +104,8 @@ class Config(QDialog):
         os.environ['BORG_PASSPHRASE'] = self.password
 
     def _create_server_path(self):
+        """creates the full server path from the server, user and port
+        options."""
         if not self.config['borgqt']['user']:
             raise BorgException("User is missing in config.")
         if not self.config['borgqt']['port']:
@@ -109,6 +119,7 @@ class Config(QDialog):
         return server_path
 
     def _select_file(self):
+        """Qt dialog to select an exisiting file."""
         dialog = QFileDialog
         dialog.ExistingFile
         file_path, ignore = dialog.getOpenFileName(
@@ -116,27 +127,33 @@ class Config(QDialog):
         return file_path
 
     def _select_directory(self):
+        """Qt dialog to select directories."""
         dialog = QFileDialog
         dialog.DirectoryOnly
         return dialog.getExistingDirectory(
             self, "Select Directory", os.getenv('HOME'))
 
     def include_file(self):
+        """add a file to the include list if the selected path is not empty."""
         file_path = self._select_file()
         if file_path:
             self.list_include.addItem(file_path)
 
     def include_directory(self):
+        """add a directory to the include list if the selected path is not
+        empty."""
         directory_path = self._select_directory()
         if directory_path:
             self.list_include.addItem(directory_path)
 
     def exclude_file(self):
+        """add a file to the exclude list if the selected path is not empty."""
         file_path = self._select_file()
         if file_path:
             self.list_exclude.addItem(file_path)
 
     def exclude_directory(self):
+        """add a file to the exclude list if the selected path is not empty."""
         directory_path = self._select_directory()
         if directory_path:
             self.list_exclude.addItem(directory_path)
@@ -153,8 +170,7 @@ class Config(QDialog):
         self.list_exclude.addItems(default_excludes)
 
     def read(self):
-        """Reads the config file
-        """
+        """Reads the config file"""
         self.path = self._get_path()
         self.config = configparser.ConfigParser()
         self.config.read(self.path)
@@ -172,6 +188,7 @@ class Config(QDialog):
         self.list_exclude.addItems(self.excludes)
 
     def apply_options(self):
+        """Writes the changed options back into the configparser object."""
         self.config['borgqt']['repository_path'] = self.line_edit_repository_path.text()
         self.config['borgqt']['password'] = self.line_edit_password.text()
         self.config['borgqt']['prefix'] = self.line_edit_prefix.text()
@@ -179,14 +196,18 @@ class Config(QDialog):
         self.config['borgqt']['port'] = self.line_edit_port.text()
         self.config['borgqt']['user'] = self.line_edit_user.text()
 
+        # Workaraound to get all items of a QListWidget as a list
         excludes = []
         for index in range(self.list_exclude.count()):
             excludes.append(self.list_exclude.item(index).text())
 
+        # Workaraound to get all items of a QListWidget as a list
         includes = []
         for index in range(self.list_include.count()):
             includes.append(self.list_include.item(index).text())
 
+        # Configparser doesn't know about list therefore we store them as json
+        # strings
         self.config['borgqt']['includes'] = json.dumps(includes,
                                                        indent=4,
                                                        sort_keys=True)
@@ -196,10 +217,13 @@ class Config(QDialog):
         self._set_environment_variables()
 
     def write(self):
+        """Write the configparser object back to the config file."""
         with open(self.path, 'w+') as configfile:
             self.config.write(configfile)
 
     def accept(self):
+        """Extend the built in accept method to apply and write the new
+        options."""
         super().accept()
         self.apply_options()
         self.write()

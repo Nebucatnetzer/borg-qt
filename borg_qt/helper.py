@@ -6,7 +6,7 @@ class BorgException(Exception):
 
 
 def show_error(e):
-    # Error Dialog
+    """Helper function to show an error dialog."""
     message = QMessageBox()
     message.setIcon(QMessageBox.Warning)
     message.setText("Error")
