@@ -34,17 +34,37 @@ class TestConfiguration(BorgQtTestCase):
         with self.assertRaises(BorgException):
             self.form.config._get_path()
 
-    def test_absent_port(self):
+    def test_empty_port(self):
         self.form.config._get_path = MagicMock(return_value=self.config_path)
         self.form.config.read()
         self.form.config.config['borgqt']['port'] = ""
         with self.assertRaises(BorgException):
             self.form.config._create_server_path()
 
-    def test_absent_user(self):
+    def test_absent_port(self):
+        self.form.config._get_path = MagicMock(return_value=self.config_path)
+        self.form.config.read()
+        if 'port' in self.form.config.config['DEFAULT']:
+            self.form.config.config['DEFAULT'].pop('port', None)
+        if 'port' in self.form.config.config['borgqt']:
+            self.form.config.config['borgqt'].pop('port', None)
+        with self.assertRaises(BorgException):
+            self.form.config._create_server_path()
+
+    def test_empty_user(self):
         self.form.config._get_path = MagicMock(return_value=self.config_path)
         self.form.config.read()
         self.form.config.config['borgqt']['user'] = ""
+        with self.assertRaises(BorgException):
+            self.form.config._create_server_path()
+
+    def test_absent_user(self):
+        self.form.config._get_path = MagicMock(return_value=self.config_path)
+        self.form.config.read()
+        if 'user' in self.form.config.config['DEFAULT']:
+            self.form.config.config['DEFAULT'].pop('user', None)
+        if 'user' in self.form.config.config['borgqt']:
+            self.form.config.config['borgqt'].pop('user', None)
         with self.assertRaises(BorgException):
             self.form.config._create_server_path()
 
