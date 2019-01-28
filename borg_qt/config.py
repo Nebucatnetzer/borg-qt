@@ -32,11 +32,11 @@ class Config(QDialog):
     def full_path(self):
         """returns the repository path or the repository server path if a
         server was provided in the configuration."""
-        if 'repository_path' in self.config['borgqt']:
-            if 'server' in self.config['borgqt']:
-                return self._create_server_path()
+        if self._return_single_option('repository_path'):
+            if self._return_single_option('server'):
+                    return self._create_server_path()
             else:
-                return self.config['borgqt']['repository_path']
+                return self._return_single_option('repository_path')
         else:
             return ""
 
@@ -106,9 +106,9 @@ class Config(QDialog):
     def _create_server_path(self):
         """creates the full server path from the server, user and port
         options."""
-        if 'user' not in self.config['borgqt']:
+        if not self._return_single_option('user'):
             raise BorgException("User is missing in config.")
-        if 'port' not in self.config['borgqt']:
+        if not self._return_single_option('port'):
             raise BorgException("Port is missing in config.")
         server_path = (self.config['borgqt']['user']
                        + "@"
