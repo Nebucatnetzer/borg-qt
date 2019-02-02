@@ -134,6 +134,33 @@ class RestoreThread(QThread):
         _process_json_error(self.json_err)
 
 
+class DeleteThread(QThread):
+    """A lass to restore a backup with borg.
+
+    Args:
+        archive_name (str) the name of the archive to restore.
+    """
+    def __init__(self, archive_name):
+        super().__init__()
+        self.archive_name = archive_name
+
+    def stop(self):
+        self.p.kill()
+        self.json_err = None
+
+    def run(self):
+        self.p = subprocess.Popen(['borg', 'delete', '--log-json',
+                                   ('::'
+                                    + self.archive_name)],
+                                  stdin=subprocess.PIPE,
+                                  stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE,
+                                  encoding='utf8')
+        self.json_output, self.json_err = self.p.communicate()
+        self.p.wait()
+        _process_json_error(self.json_err)
+
+
 def backup(includes, excludes=None, prefix=None):
     thread = BackupThread(includes, excludes=excludes, prefix=prefix)
     thread.run()

@@ -49,6 +49,7 @@ class MainWindow(QMainWindow):
         self.action_settings.triggered.connect(self.show_settings)
         self.action_backup.triggered.connect(self.create_backup)
         self.action_restore.triggered.connect(self.restore_backup)
+        self.action_delete.triggered.connect(self.delete_backup)
 
     def start(self):
         """This method is intendet to be used only once at the application
@@ -88,30 +89,60 @@ class MainWindow(QMainWindow):
             dialog = ProgressDialog(thread)
             dialog.label_info.setText("creating a backup.")
             dialog.exec_()
-            self.update_archives()
-            self.update_repository_stats()
+            self.update_ui()
         except BorgException as e:
             show_error(e)
 
     def _get_target_path(self):
+        """Opens a file dialog and returns the opened path."""
         dlg = QFileDialog
         dlg.DirectoryOnly
         folder_name = str(dlg.getExistingDirectory(
             self, "Select Directory", os.getenv('HOME')))
         return folder_name
 
+    @property
+    def selected_archive(self):
+        return self.list_archive.currentItem().text()
+
     def restore_backup(self):
         """Restores a selected backup to the given path."""
-        target_path = self._get_target_path()
-        if target_path:
-            archive_name = self.list_archive.currentItem().text()
-            restore_path = os.path.join(target_path, archive_name)
+        try:
+            archive_name = self.selected_archive
+            target_path = self._get_target_path()
+        except AttributeError:
+            error = BorgException("Please create a backup first.")
+            archive_name = None
+            target_path = None
+            show_error(error)
+
+        if target_path and archive_name:
             try:
+                restore_path = os.path.join(target_path, archive_name)
                 thread = borg.RestoreThread(archive_name, restore_path)
                 dialog = ProgressDialog(thread)
                 dialog.label_info.setText("restoring a backup.")
                 dialog.exec_()
                 open_path(restore_path)
+            except BorgException as e:
+                show_error(e)
+
+    def delete_backup(self):
+        """Deletes the selected archive from the repository."""
+        try:
+            archive_name = self.selected_archive
+        except AttributeError:
+            error = BorgException("Please create a backup first.")
+            archive_name = None
+            show_error(error)
+
+        if archive_name:
+            try:
+                thread = borg.DeleteThread(archive_name)
+                dialog = ProgressDialog(thread)
+                dialog.label_info.setText("deleting a backup.")
+                dialog.exec_()
+                self.update_ui()
             except BorgException as e:
                 show_error(e)
 
@@ -123,10 +154,11 @@ class MainWindow(QMainWindow):
             archive_names.append(archive['name'])
         self.list_archive.addItems(archive_names)
 
-    def update_archives(self):
+    def update_ui(self):
         """Lists all the archive names in the UI."""
         try:
             self._update_archives()
+            self._update_repository_stats()
         except BorgException as e:
             show_error(e)
 
@@ -143,9 +175,3 @@ class MainWindow(QMainWindow):
         self.label_repo_deduplicated_size.setText(
             "Deduplicated Size: "
             + convert_size(stats['unique_csize']))
-
-    def update_repository_stats(self):
-        try:
-            self._update_repository_stats()
-        except BorgException as e:
-            show_error(e)
