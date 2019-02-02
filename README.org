@@ -6,7 +6,7 @@ Linux.
 
 ** Motivation
 
-I think Borg is a great backup tool which should be available to many move
+I think Borg is a great backup tool which should be available to many more
 users. Since command line tools can be a bit scary for less experienced users I
 decided to write a GUI as my "thesis" during my final semester at the IBZ
 school in Aarau, Switzerland.
@@ -14,8 +14,7 @@ school in Aarau, Switzerland.
 ** Getting Started
 
 These instructions will get you a copy of the project up and running on your
-local machine for development and testing purposes. See deployment for notes on
-how to deploy the project on a live system.
+local machine.
 
 *** Prerequisites
 
@@ -34,7 +33,7 @@ For other systems check their [[https://borgbackup.readthedocs.io/en/stable/][do
 *** Installing
 
 Installing Borg-Qt is very simple. Download the binary for your operating
-system here: https://github.com/Nebucatnetzer/borg-qt/releases
+system here: [[https://github.com/borgqt/borg-qt/releases]]
 
 You can then either run it by double clicking on it or by copying it to
 ~~/.local/bin/~ like Borg. If you do that you might want to create a desktop
@@ -57,7 +56,7 @@ Make sure the file is executable:
 chmod +x ~/.local/share/applications/borg-qt.desktop
 #+end_src
 
-Now you should find Borg-Qt in your desktops start menu.
+Now you should find Borg-Qt in your desktop's start menu.
 
 ** Development
 
@@ -123,8 +122,8 @@ invited to contribute.
 ** Versioning
 
 Currently there is no versioning as such. In the future a versioning scheme
-based on [[http://semver.org/][semantic Versioning]] might get used. However the master branch is
-considered to be the stable branch. Other branches might be highly experimental.
+based on [[http://semver.org/][semantic versioning]] might get used. The master branch is considered to
+be the stable branch. Other branches might be highly experimental.
 
 ** Authors
 
