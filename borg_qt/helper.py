@@ -1,5 +1,8 @@
+import os
 import math
+from PyQt5.QtCore import QCoreApplication, QUrl
 from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtGui import QDesktopServices
 
 
 class BorgException(Exception):
@@ -26,3 +29,10 @@ def convert_size(size_bytes):
     p = math.pow(1000, i)
     s = round(size_bytes / p, 2)
     return "%s %s" % (s, size_name[i])
+
+
+def open_path(target_path):
+    """Opens the file manager at the given location."""
+    if os.path.exists(target_path):
+        QDesktopServices.openUrl(QUrl.fromLocalFile(
+            os.path.abspath(target_path)))

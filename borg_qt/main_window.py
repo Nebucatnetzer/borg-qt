@@ -3,11 +3,12 @@ import sys
 
 from PyQt5 import uic
 from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtWidgets import QMainWindow, QFileSystemModel
+from PyQt5.QtWidgets import QMainWindow, QFileSystemModel, QFileDialog
 
 from config import Config
-from helper import BorgException, show_error, convert_size
+from helper import BorgException, show_error, convert_size, open_path
 import borg_interface as borg
+from progress import ProgressDialog
 
 
 class MainWindow(QMainWindow):
@@ -47,6 +48,7 @@ class MainWindow(QMainWindow):
         # Connecting actions and buttons.
         self.action_settings.triggered.connect(self.show_settings)
         self.action_backup.triggered.connect(self.create_backup)
+        self.action_restore.triggered.connect(self.restore_backup)
 
     def start(self):
         """This method is intendet to be used only once at the application
@@ -80,12 +82,38 @@ class MainWindow(QMainWindow):
         """Creates a backup of the selected item in the treeview."""
         try:
             self._check_path()
-            borg.backup([self.src_path], excludes=self.config.excludes,
-                        prefix=self.config.prefix)
+            thread = borg.BackupThread([self.src_path],
+                                       excludes=self.config.excludes,
+                                       prefix=self.config.prefix)
+            dialog = ProgressDialog(thread)
+            dialog.label_info.setText("creating a backup.")
+            dialog.exec_()
             self.update_archives()
             self.update_repository_stats()
         except BorgException as e:
             show_error(e)
+
+    def _get_target_path(self):
+        dlg = QFileDialog
+        dlg.DirectoryOnly
+        folder_name = str(dlg.getExistingDirectory(
+            self, "Select Directory", os.getenv('HOME')))
+        return folder_name
+
+    def restore_backup(self):
+        """Restores a selected backup to the given path."""
+        target_path = self._get_target_path()
+        if target_path:
+            archive_name = self.list_archive.currentItem().text()
+            restore_path = os.path.join(target_path, archive_name)
+            try:
+                thread = borg.RestoreThread(archive_name, restore_path)
+                dialog = ProgressDialog(thread)
+                dialog.label_info.setText("restoring a backup.")
+                dialog.exec_()
+                open_path(restore_path)
+            except BorgException as e:
+                show_error(e)
 
     def _update_archives(self):
         """Lists all the archive names in the UI."""

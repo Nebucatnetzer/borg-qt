@@ -1,3 +1,5 @@
+import os
+import shutil
 import subprocess
 import json
 
@@ -66,6 +68,13 @@ def _process_excludes(excludes):
 
 
 class BackupThread(QThread):
+    """A class to create a backup with borg.
+
+    Args:
+        prefix (str) the prefix for the archive name.
+        includes (list) a list of all the paths to backup.
+        excludes (list) a list of all the paths to exclude from the backup.
+    """
     def __init__(self, includes, excludes=None, prefix=None):
         super().__init__()
         self.includes = _process_includes(includes)
@@ -77,13 +86,6 @@ class BackupThread(QThread):
         self.json_err = None
 
     def run(self):
-        """Function to create a backup with borg.
-
-        Args:
-            prefix (str) the prefix for the archive name.
-            raw_includes (list) a list of all the paths to backup.
-            raw_excludes (list) a list of all the paths to exclude from the backup.
-        """
         self.p = subprocess.Popen(['borg', 'create', '--log-json', '--json',
                                    ('::'
                                     + self.prefix
@@ -99,14 +101,40 @@ class BackupThread(QThread):
         _process_json_error(self.json_err)
 
 
+class RestoreThread(QThread):
+    """A lass to restore a backup with borg.
+
+    Args:
+        archive_name (str) the name of the archive to restore.
+        restore_path (str) the path where to restore should get stored at.
+    """
+    def __init__(self, archive_name, restore_path):
+        super().__init__()
+        self.archive_name = archive_name
+        self.restore_path = restore_path
+
+    def stop(self):
+        self.p.kill()
+        shutil.rmtree(self.restore_path)
+        self.json_err = None
+
+    def run(self):
+        if not os.path.exists(self.restore_path):
+            os.makedirs(self.restore_path)
+        self.p = subprocess.Popen(['borg', 'extract', '--log-json',
+                                   ('::'
+                                    + self.archive_name)],
+                                  cwd=self.restore_path,
+                                  stdin=subprocess.PIPE,
+                                  stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE,
+                                  encoding='utf8')
+        self.json_output, self.json_err = self.p.communicate()
+        self.p.wait()
+        _process_json_error(self.json_err)
+
+
 def backup(includes, excludes=None, prefix=None):
-    thread = BackupThread(includes, excludes=excludes, prefix=prefix)
-    dialog = ProgressDialog(thread)
-    dialog.label_info.setText("creating a backup.")
-    dialog.exec_()
-
-
-def background_backup(includes, excludes=None, prefix=None):
     thread = BackupThread(includes, excludes=excludes, prefix=prefix)
     thread.run()
 
