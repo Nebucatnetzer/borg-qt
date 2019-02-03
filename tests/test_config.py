@@ -91,8 +91,9 @@ class TestWriteConfiguration(BorgQtTestCase):
         self.form.config.write()
         config = configparser.ConfigParser()
         config.read(self.form.config.path)
-        self.assertEqual(self.form.config.config['borgqt']['password'],
-                         config['borgqt']['password'])
+        for value in config['borgqt']:
+            self.assertEqual(self.form.config.config['borgqt'][value],
+                             config['borgqt'][value])
 
 
 class TestGuiConfiguration(BorgQtTestCase):
