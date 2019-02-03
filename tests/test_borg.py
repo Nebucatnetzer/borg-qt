@@ -2,8 +2,6 @@ import os
 import sys
 import subprocess
 from time import strftime
-from unittest.mock import MagicMock
-from unittest import TestCase
 
 from PyQt5.QtWidgets import QApplication
 
