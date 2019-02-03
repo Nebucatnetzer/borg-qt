@@ -33,11 +33,15 @@ class RestoreTestCase(BorgInterfaceTest):
         super().setUp()
         borg.backup(['.'])
 
+    def tearDown(self):
+        remove_path(self.target_path)
+        super().tearDown()
+
     def test_restore(self):
         repo_archives = borg.get_archives()
         archive_name = repo_archives[0]['name']
-        target_path = '/tmp/restore/'
-        restore_path = os.path.join(target_path, archive_name)
+        self.target_path = '/tmp/restore/'
+        restore_path = os.path.join(self.target_path, archive_name)
         thread = borg.RestoreThread(archive_name, restore_path)
         thread.run()
         self.assertTrue(os.path.exists(
