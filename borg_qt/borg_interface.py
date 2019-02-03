@@ -6,7 +6,6 @@ import json
 from PyQt5.QtCore import QThread
 
 from helper import BorgException
-from progress import ProgressDialog
 
 
 def _process_json_error(json_err):
