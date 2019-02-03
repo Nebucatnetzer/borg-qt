@@ -110,7 +110,8 @@ class Config(QDialog):
             raise BorgException("User is missing in config.")
         if not self._return_single_option('port'):
             raise BorgException("Port is missing in config.")
-        server_path = (self.config['borgqt']['user']
+        server_path = ('ssh://'
+                       + self.config['borgqt']['user']
                        + "@"
                        + self.config['borgqt']['server']
                        + ":"
