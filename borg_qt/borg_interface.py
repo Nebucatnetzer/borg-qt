@@ -179,3 +179,17 @@ def get_repository_stats():
     json_output, json_err = p.communicate()
     _process_json_error(json_err)
     return _process_json_repo_stats(json_output)
+
+
+def mount(archive_name, mount_path):
+    p = subprocess.Popen(['borg', 'mount', '--log-json',
+                          ('::'
+                           + archive_name),
+                          mount_path],
+                         stdin=subprocess.PIPE,
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE,
+                         encoding='utf8')
+    json_output, json_err = p.communicate()
+    p.wait()
+    _process_json_error(json_err)

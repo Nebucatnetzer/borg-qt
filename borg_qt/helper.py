@@ -1,5 +1,6 @@
 import os
 import math
+import shutil
 from PyQt5.QtCore import QCoreApplication, QUrl
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtGui import QDesktopServices
@@ -36,3 +37,13 @@ def open_path(target_path):
     if os.path.exists(target_path):
         QDesktopServices.openUrl(QUrl.fromLocalFile(
             os.path.abspath(target_path)))
+
+
+def create_path(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+
+def remove_path(path):
+    if os.path.exists(path):
+        shutil.rmtree(path)

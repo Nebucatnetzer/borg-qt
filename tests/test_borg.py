@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import QApplication
 import context
 from testcase import BorgInterfaceTest
 import borg_interface as borg
+from helper import create_path, remove_path
 
 
 app = QApplication(sys.argv)
@@ -55,3 +56,23 @@ class DeleteTestCase(BorgInterfaceTest):
         thread.run()
         repo_archives = borg.get_archives()
         self.assertEqual(repo_archives, [])
+
+
+class MountTestCase(BorgInterfaceTest):
+    def setUp(self):
+        super().setUp()
+        borg.backup(['.'])
+
+    def tearDown(self):
+        os.system('borg umount ' + self.mount_path)
+        remove_path(self.mount_path)
+        super().tearDown()
+
+    def test_restore(self):
+        repo_archives = borg.get_archives()
+        archive_name = repo_archives[0]['name']
+        self.mount_path = os.path.join('/tmp/', archive_name)
+        create_path(self.mount_path)
+        borg.mount(archive_name, self.mount_path)
+        self.assertTrue(os.path.exists(
+            os.path.join(self.mount_path, os.path.realpath(__file__))))

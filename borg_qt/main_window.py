@@ -6,7 +6,8 @@ from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QMainWindow, QFileSystemModel, QFileDialog
 
 from config import Config
-from helper import BorgException, show_error, convert_size, open_path
+from helper import (BorgException, show_error, convert_size, open_path,
+                    create_path, remove_path)
 import borg_interface as borg
 from progress import ProgressDialog
 
@@ -30,6 +31,9 @@ class MainWindow(QMainWindow):
         # Create a Config object for storing the configuration.
         self.config = Config()
 
+        # list of mounted archives
+        self.mount_paths = []
+
         # File tree
         model = QFileSystemModel()
         # model.setRootPath('/')
@@ -50,6 +54,7 @@ class MainWindow(QMainWindow):
         self.action_backup.triggered.connect(self.create_backup)
         self.action_restore.triggered.connect(self.restore_backup)
         self.action_delete.triggered.connect(self.delete_backup)
+        self.action_mount.triggered.connect(self.mount_backup)
 
     def start(self):
         """This method is intendet to be used only once at the application
@@ -63,6 +68,14 @@ class MainWindow(QMainWindow):
         except BorgException as e:
             show_error(e)
             sys.exit(1)
+
+    def closeEvent(self, *args, **kwargs):
+        super(QMainWindow, self).closeEvent(*args, **kwargs)
+        if self.mount_paths:
+            for path in self.mount_paths:
+                if os.path.exists(path):
+                    os.system('borg umount ' + path)
+                    remove_path(path)
 
     def show_settings(self):
         """Display the settings dialog."""
@@ -175,3 +188,24 @@ class MainWindow(QMainWindow):
         self.label_repo_deduplicated_size.setText(
             "Deduplicated Size: "
             + convert_size(stats['unique_csize']))
+
+    def mount_backup(self):
+        try:
+            archive_name = self.selected_archive
+        except AttributeError:
+            error = BorgException("Please create or select a backup first.")
+            archive_name = None
+            show_error(error)
+
+        if archive_name:
+            mount_path = os.path.join('/tmp/', archive_name)
+            create_path(mount_path)
+            if os.access(mount_path, os.W_OK):
+                self.mount_paths.append(mount_path)
+                try:
+                    borg.mount(archive_name, mount_path)
+                    open_path(mount_path)
+                except BorgException as e:
+                    show_error(e)
+            else:
+                open_path(mount_path)
