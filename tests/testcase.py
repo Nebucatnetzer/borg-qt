@@ -6,6 +6,7 @@ import unittest
 import warnings
 
 from main_window import MainWindow
+from helper import remove_path
 
 
 def fxn():
@@ -37,5 +38,4 @@ class BorgInterfaceTest(unittest.TestCase):
                        stderr=subprocess.PIPE)
 
     def tearDown(self):
-        if os.path.exists(self.repository_path):
-            shutil.rmtree(self.repository_path)
+        remove_path(self.repository_path)

@@ -5,7 +5,7 @@ import json
 
 from PyQt5.QtCore import QThread
 
-from helper import BorgException
+from helper import BorgException, create_path, remove_path
 
 
 def _process_json_error(json_err):
@@ -114,12 +114,11 @@ class RestoreThread(QThread):
 
     def stop(self):
         self.p.kill()
-        shutil.rmtree(self.restore_path)
+        remove_path(self.restore_path)
         self.json_err = None
 
     def run(self):
-        if not os.path.exists(self.restore_path):
-            os.makedirs(self.restore_path)
+        create_path(self.restore_path)
         self.p = subprocess.Popen(['borg', 'extract', '--log-json',
                                    ('::'
                                     + self.archive_name)],
