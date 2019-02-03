@@ -124,7 +124,7 @@ class MainWindow(QMainWindow):
             archive_name = self.selected_archive
             target_path = self._get_target_path()
         except AttributeError:
-            error = BorgException("Please create a backup first.")
+            error = BorgException("Please create or select a backup first.")
             archive_name = None
             target_path = None
             show_error(error)
@@ -145,7 +145,7 @@ class MainWindow(QMainWindow):
         try:
             archive_name = self.selected_archive
         except AttributeError:
-            error = BorgException("Please create a backup first.")
+            error = BorgException("Please create or select a backup first.")
             archive_name = None
             show_error(error)
 
