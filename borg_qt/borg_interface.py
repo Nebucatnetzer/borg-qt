@@ -53,17 +53,20 @@ def _process_prefix(prefix):
 
 
 def _process_includes(includes):
-    return ' '.join(includes)
+    processed_items = []
+    for item in includes:
+        processed_items.append(item)
+    return processed_items
 
 
 def _process_excludes(excludes):
+    processed_items = []
     if excludes:
-        processed_items = []
         for item in excludes:
-            processed_items.append('--exclude=' + '"' + item + '"')
-        return ' '.join(processed_items)
+            processed_items.extend(['-e', item])
+        return processed_items
     else:
-        return ""
+        return processed_items
 
 
 class BackupThread(QThread):
@@ -79,19 +82,23 @@ class BackupThread(QThread):
         self.includes = _process_includes(includes)
         self.excludes = _process_excludes(excludes)
         self.prefix = _process_prefix(prefix)
+        self.create_command()
 
     def stop(self):
         self.p.kill()
         self.json_err = None
 
+    def create_command(self):
+        self.command = ['borg', 'create', '--log-json', '--json',
+                        ('::'
+                         + self.prefix
+                         + '{now:%Y-%m-%d_%H:%M:%S}')]
+        self.command.extend(self.includes)
+        if self.excludes:
+            self.command.extend(self.excludes)
+
     def run(self):
-        self.p = subprocess.Popen(['borg', 'create', '--log-json', '--json',
-                                   ('::'
-                                    + self.prefix
-                                    + '{now:%Y-%m-%d_%H:%M:%S}'),
-                                   self.includes,
-                                   self.excludes],
-                                  stdin=subprocess.PIPE,
+        self.p = subprocess.Popen(self.command,
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE,
                                   encoding='utf8')
