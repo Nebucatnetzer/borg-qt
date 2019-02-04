@@ -1,17 +1,17 @@
 [DEFAULT]
 excludes = [
-    "/home/*/.gvfs/",
-    "/home/*/.cache/",
-    "/home/*/.thumbnails/",
-    "/home/*/.dropbox/",
-    "/proc/*",
-    "/sys/*",
-    "/dev/*",
+    "/home/*/.gvfs",
+    "/home/*/.cache",
+    "/home/*/.thumbnails",
+    "/home/*/.dropbox",
+    "/proc",
+    "/sys",
+    "/dev",
     "/etc/mtab",
-    "/var/cache/*",
-    "lost+found/*",
-    "/tmp/*",
-    "/var/tmp/*",
+    "/var/cache",
+    "lost+found",
+    "/tmp",
+    "/var/tmp",
     "/home/*/.local/share/Trash"
     ]
 port = 22
