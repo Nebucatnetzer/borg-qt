@@ -32,25 +32,12 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="label_static_info">
+  <widget class="QLabel" name="label_info">
    <property name="geometry">
     <rect>
      <x>20</x>
      <y>10</y>
-     <width>141</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Borg-Qt is currently</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_info">
-   <property name="geometry">
-    <rect>
-     <x>140</x>
-     <y>10</y>
-     <width>231</width>
+     <width>361</width>
      <height>20</height>
     </rect>
    </property>

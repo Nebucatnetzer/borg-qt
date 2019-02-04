@@ -100,7 +100,7 @@ class MainWindow(QMainWindow):
                                        excludes=self.config.excludes,
                                        prefix=self.config.prefix)
             dialog = ProgressDialog(thread)
-            dialog.label_info.setText("creating a backup.")
+            dialog.label_info.setText("Borg-Qt is currently creating a backup.")
             dialog.exec_()
             self.update_ui()
         except BorgException as e:
@@ -134,7 +134,8 @@ class MainWindow(QMainWindow):
                 restore_path = os.path.join(target_path, archive_name)
                 thread = borg.RestoreThread(archive_name, restore_path)
                 dialog = ProgressDialog(thread)
-                dialog.label_info.setText("restoring a backup.")
+                dialog.label_info.setText(
+                    "Borg-Qt is currently restoring a backup.")
                 dialog.exec_()
                 open_path(restore_path)
             except BorgException as e:
@@ -153,7 +154,8 @@ class MainWindow(QMainWindow):
             try:
                 thread = borg.DeleteThread(archive_name)
                 dialog = ProgressDialog(thread)
-                dialog.label_info.setText("deleting a backup.")
+                dialog.label_info.setText(
+                    "Borg-Qt is currently deleting a backup.")
                 dialog.exec_()
                 self.update_ui()
             except BorgException as e:
