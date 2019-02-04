@@ -203,9 +203,9 @@ class MainWindow(QMainWindow):
             mount_path = os.path.join('/tmp/', archive_name)
             create_path(mount_path)
             if os.access(mount_path, os.W_OK):
-                self.mount_paths.append(mount_path)
                 try:
                     borg.mount(archive_name, mount_path)
+                    self.mount_paths.append(mount_path)
                     open_path(mount_path)
                 except BorgException as e:
                     show_error(e)
