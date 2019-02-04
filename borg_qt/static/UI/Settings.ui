@@ -148,10 +148,10 @@
       <item row="3" column="0" colspan="2">
        <widget class="QLineEdit" name="line_edit_password">
         <property name="inputMethodHints">
-         <set>Qt::ImhNone</set>
+         <set>Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
         </property>
         <property name="echoMode">
-         <enum>QLineEdit::Normal</enum>
+         <enum>QLineEdit::Password</enum>
         </property>
         <property name="clearButtonEnabled">
          <bool>false</bool>
