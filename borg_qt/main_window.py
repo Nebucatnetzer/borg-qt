@@ -132,6 +132,7 @@ class MainWindow(QMainWindow):
         if target_path and archive_name:
             try:
                 restore_path = os.path.join(target_path, archive_name)
+                create_path(restore_path)
                 thread = borg.RestoreThread(archive_name, restore_path)
                 dialog = ProgressDialog(thread)
                 dialog.label_info.setText(
@@ -140,6 +141,7 @@ class MainWindow(QMainWindow):
                 open_path(restore_path)
             except BorgException as e:
                 show_error(e)
+                remove_path(restore_path)
 
     def delete_backup(self):
         """Deletes the selected archive from the repository."""
@@ -163,9 +165,10 @@ class MainWindow(QMainWindow):
 
     def _update_archives(self):
         """Lists all the archive names in the UI."""
+        thread = borg.ListThread()
         self.list_archive.clear()
         archive_names = []
-        for archive in borg.get_archives():
+        for archive in thread.run():
             archive_names.append(archive['name'])
         self.list_archive.addItems(archive_names)
 
@@ -178,7 +181,8 @@ class MainWindow(QMainWindow):
             show_error(e)
 
     def _update_repository_stats(self):
-        stats = borg.get_repository_stats()
+        thread = borg.InfoThread()
+        stats = thread.run()
         self.label_repo_original_size.setText(
             "Original Size: "
             + convert_size(stats['total_size']))
@@ -203,11 +207,13 @@ class MainWindow(QMainWindow):
             mount_path = os.path.join('/tmp/', archive_name)
             create_path(mount_path)
             if os.access(mount_path, os.W_OK):
+                thread = borg.MountThread(archive_name, mount_path)
                 try:
-                    borg.mount(archive_name, mount_path)
+                    thread.run()
                     self.mount_paths.append(mount_path)
                     open_path(mount_path)
                 except BorgException as e:
                     show_error(e)
+                    remove_path(mount_path)
             else:
                 open_path(mount_path)
