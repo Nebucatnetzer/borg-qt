@@ -3,7 +3,8 @@ import sys
 
 from PyQt5 import uic
 from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtWidgets import QMainWindow, QFileSystemModel, QFileDialog
+from PyQt5.QtWidgets import (QMainWindow, QFileSystemModel, QFileDialog,
+                             QMessageBox)
 
 from config import Config
 from helper import (BorgException, show_error, convert_size, open_path,
@@ -153,15 +154,16 @@ class MainWindow(QMainWindow):
             show_error(error)
 
         if archive_name:
-            try:
-                thread = borg.DeleteThread(archive_name)
-                dialog = ProgressDialog(thread)
-                dialog.label_info.setText(
-                    "Borg-Qt is currently deleting a backup.")
-                dialog.exec_()
-                self.update_ui()
-            except BorgException as e:
-                show_error(e)
+            if self.yes_no("Do you want to delete this archive?"):
+                try:
+                    thread = borg.DeleteThread(archive_name)
+                    dialog = ProgressDialog(thread)
+                    dialog.label_info.setText(
+                        "Borg-Qt is currently deleting a backup.")
+                    dialog.exec_()
+                    self.update_ui()
+                except BorgException as e:
+                    show_error(e)
 
     def _update_archives(self):
         """Lists all the archive names in the UI."""
@@ -217,3 +219,12 @@ class MainWindow(QMainWindow):
                     remove_path(mount_path)
             else:
                 open_path(mount_path)
+
+    def yes_no(self, question):
+        button_reply = QMessageBox.question(self, 'Borg-Qt', question,
+                                            QMessageBox.Yes |
+                                            QMessageBox.No, QMessageBox.No)
+        if button_reply == QMessageBox.Yes:
+            return True
+        else:
+            return False
