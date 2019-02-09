@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import (QMainWindow, QFileSystemModel, QFileDialog,
 
 from config import Config
 from helper import (BorgException, show_error, convert_size, open_path,
-                    create_path, remove_path)
+                    create_path, remove_path, check_path)
 import borg_interface as borg
 from progress import ProgressDialog
 
@@ -130,7 +130,7 @@ class MainWindow(QMainWindow):
             target_path = None
             show_error(error)
 
-        if target_path and archive_name:
+        if check_path(target_path) and archive_name:
             try:
                 restore_path = os.path.join(target_path, archive_name)
                 create_path(restore_path)

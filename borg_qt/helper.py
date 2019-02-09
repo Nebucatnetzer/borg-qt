@@ -47,3 +47,10 @@ def create_path(path):
 def remove_path(path):
     if os.path.exists(path):
         shutil.rmtree(path)
+
+
+def check_path(path):
+    if os.access(path, os.W_OK):
+        return True
+    exception = Exception("The selected path isn't writeable!")
+    show_error(exception)
