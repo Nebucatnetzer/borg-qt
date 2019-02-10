@@ -11,13 +11,13 @@ from helper import BorgException
 class BorgQtThread(QThread):
     def __init__(self):
         super().__init__()
-        self.create_pocess()
+        self.create_process()
 
     def stop(self):
         self.p.kill()
         self.json_err = None
 
-    def create_pocess(self):
+    def create_process(self):
         self.create_command()
         self.p = subprocess.Popen(self.command,
                                   stdout=subprocess.PIPE,
@@ -126,7 +126,7 @@ class RestoreThread(BorgQtThread):
         self.command = ['borg', 'extract', '--log-json',
                         ('::' + self.archive_name)]
 
-    def create_pocess(self):
+    def create_process(self):
         self.create_command()
         self.p = subprocess.Popen(self.command,
                                   cwd=self.restore_path,
