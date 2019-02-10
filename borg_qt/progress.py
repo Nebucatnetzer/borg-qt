@@ -6,8 +6,11 @@ from PyQt5 import uic
 
 
 class ProgressDialog(QDialog):
-    """The main window of the application. It provides the various functions to
-    control BorgBackup."""
+    """Displays a progress dialog while a thread is running. When the thread
+    stops, the dialog disappears.
+
+    Args:
+        thread (thread) the thread to execute."""
     def __init__(self, thread):
         super(ProgressDialog, self).__init__()
         # Load the UI file to get the dialogs layout.

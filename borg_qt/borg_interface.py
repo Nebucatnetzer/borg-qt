@@ -9,15 +9,22 @@ from helper import BorgException
 
 
 class BorgQtThread(QThread):
+    """Provides the base for interfacing with borg. The method
+    self.create_command needs to be implemented on each child class in order to
+    make it work."""
     def __init__(self):
         super().__init__()
         self.create_process()
 
     def stop(self):
+        """Kill the process when the thread stops."""
         self.p.kill()
         self.json_err = None
 
     def create_process(self):
+        """Creates the process which executes borg."""
+
+        # self.create_command() needs to be implemented on each subclass.
         self.create_command()
         self.p = subprocess.Popen(self.command,
                                   stdout=subprocess.PIPE,
@@ -30,6 +37,9 @@ class BorgQtThread(QThread):
         self.process_json_error(self.json_err)
 
     def process_json_error(self, json_err):
+        """Looks in the returned json error string for errors and provides them
+        as BorgException in case there are any. Ignores errors about stale
+        locks of borg."""
         if json_err:
             error = json_err.splitlines()[0]
             if 'stale' in error:
@@ -40,6 +50,7 @@ class BorgQtThread(QThread):
 
 
 class ListThread(BorgQtThread):
+    """Returns a list of all archives in the repository."""
     def create_command(self):
         self.command = ['borg', 'list', '--log-json', '--json']
 
@@ -57,6 +68,7 @@ class ListThread(BorgQtThread):
 
 
 class InfoThread(BorgQtThread):
+    """Return the statistics about the current repository."""
     def create_command(self):
         self.command = ['borg', 'info', '--log-json', '--json']
 
@@ -72,7 +84,7 @@ class InfoThread(BorgQtThread):
 
 
 class BackupThread(BorgQtThread):
-    """A class to create a backup with borg.
+    """Creates a backup with borg.
 
     Args:
         prefix (str) the prefix for the archive name.
@@ -95,12 +107,14 @@ class BackupThread(BorgQtThread):
             self.command.extend(self.excludes)
 
     def _process_prefix(self, prefix):
+        """Prepares the prefix for the final command."""
         if prefix:
             self.prefix = prefix + "_"
         else:
             self.prefix = ""
 
     def _process_excludes(self, excludes):
+        """Pairs every exclude with the required option for borg."""
         processed_items = []
         if excludes:
             for item in excludes:
@@ -111,7 +125,7 @@ class BackupThread(BorgQtThread):
 
 
 class RestoreThread(BorgQtThread):
-    """A lass to restore a backup with borg.
+    """Restores a backup with borg.
 
     Args:
         archive_name (str) the name of the archive to restore.
@@ -127,6 +141,9 @@ class RestoreThread(BorgQtThread):
                         ('::' + self.archive_name)]
 
     def create_process(self):
+        """The create_process needs to get overwritten because borg restores
+        the archive into the current folder. Therefore the process needs to cd
+        into the target path."""
         self.create_command()
         self.p = subprocess.Popen(self.command,
                                   cwd=self.restore_path,
@@ -137,10 +154,10 @@ class RestoreThread(BorgQtThread):
 
 
 class DeleteThread(BorgQtThread):
-    """A lass to restore a backup with borg.
+    """Deletes an archive from the repository.
 
     Args:
-        archive_name (str) the name of the archive to restore.
+        archive_name (str) the name of the archive to delete.
     """
     def __init__(self, archive_name):
         self.archive_name = archive_name
@@ -152,10 +169,11 @@ class DeleteThread(BorgQtThread):
 
 
 class MountThread(BorgQtThread):
-    """A lass to restore a backup with borg.
+    """Mounts an archive at the given path.
 
     Args:
         archive_name (str) the name of the archive to restore.
+        mount_path (str) the target path to mount the archive at.
     """
     def __init__(self, archive_name, mount_path):
         self.archive_name = archive_name

@@ -33,23 +33,38 @@ def convert_size(size_bytes):
 
 
 def open_path(target_path):
-    """Opens the file manager at the given location."""
+    """Opens the file manager at the given location.
+
+    Args:
+        target_path (str) The path to open in the file manager."""
     if os.path.exists(target_path):
         QDesktopServices.openUrl(QUrl.fromLocalFile(
             os.path.abspath(target_path)))
 
 
 def create_path(path):
+    """Creates the given path.
+
+    Args:
+        path (str) The path to create."""
     if not os.path.exists(path):
         os.makedirs(path)
 
 
 def remove_path(path):
+    """Removes the given path recursively.
+
+    Args:
+        path (str) The path to delete."""
     if os.path.exists(path):
         shutil.rmtree(path)
 
 
 def check_path(path):
+    """Checks if the given path is writeable.
+
+    Args:
+        path (str) The path to check."""
     if os.access(path, os.W_OK):
         return True
     exception = Exception("The selected path isn't writeable!")

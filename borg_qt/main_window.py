@@ -72,6 +72,8 @@ class MainWindow(QMainWindow):
 
     def closeEvent(self, *args, **kwargs):
         super(QMainWindow, self).closeEvent(*args, **kwargs)
+        # When the application gets close unmount all the archives and remove
+        # their paths.
         if self.mount_paths:
             for path in self.mount_paths:
                 if os.path.exists(path):
@@ -88,6 +90,7 @@ class MainWindow(QMainWindow):
         self.src_path = self.treeview_files.model().filePath(signal)
 
     def _check_path(self):
+        """Makes sure that the user selected a path to backup."""
         message = ("Please select a file or directory "
                    "before creating a backup.")
         if not hasattr(self, 'src_path'):
@@ -130,6 +133,8 @@ class MainWindow(QMainWindow):
             target_path = None
             show_error(error)
 
+        # Only restore the backup if the target is writeable and the archive
+        # was selected.
         if check_path(target_path) and archive_name:
             try:
                 restore_path = os.path.join(target_path, archive_name)
@@ -153,7 +158,9 @@ class MainWindow(QMainWindow):
             archive_name = None
             show_error(error)
 
+        # Only continue if an archive was selected.
         if archive_name:
+            # Prompt the user before continuing.
             if self.yes_no("Do you want to delete this archive?"):
                 try:
                     thread = borg.DeleteThread(archive_name)
@@ -175,7 +182,7 @@ class MainWindow(QMainWindow):
         self.list_archive.addItems(archive_names)
 
     def update_ui(self):
-        """Lists all the archive names in the UI."""
+        """Updates the archive list and repository stats in the UI."""
         try:
             self._update_archives()
             self._update_repository_stats()
@@ -183,6 +190,8 @@ class MainWindow(QMainWindow):
             show_error(e)
 
     def _update_repository_stats(self):
+        """Update the repository stats and display them in a human readable
+        format."""
         thread = borg.InfoThread()
         stats = thread.run()
         self.label_repo_original_size.setText(
@@ -198,6 +207,8 @@ class MainWindow(QMainWindow):
             + convert_size(stats['unique_csize']))
 
     def mount_backup(self):
+        """Mount the selected archive in the tmp directory. If it succeeds the
+        mount_path gets written to a property of the main_window."""
         try:
             archive_name = self.selected_archive
         except AttributeError:
@@ -205,9 +216,11 @@ class MainWindow(QMainWindow):
             archive_name = None
             show_error(error)
 
+        # only continue if the user selected an archive
         if archive_name:
             mount_path = os.path.join('/tmp/', archive_name)
             create_path(mount_path)
+            # only continue if the mount_path is writeable
             if os.access(mount_path, os.W_OK):
                 thread = borg.MountThread(archive_name, mount_path)
                 try:
@@ -218,9 +231,14 @@ class MainWindow(QMainWindow):
                     show_error(e)
                     remove_path(mount_path)
             else:
+                # Opens the path in a file manager
                 open_path(mount_path)
 
     def yes_no(self, question):
+        """Simple yes/no dialog.
+
+        Args:
+                question (str) The question to display to the user."""
         button_reply = QMessageBox.question(self, 'Borg-Qt', question,
                                             QMessageBox.Yes |
                                             QMessageBox.No, QMessageBox.No)
