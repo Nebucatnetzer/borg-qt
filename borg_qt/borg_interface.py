@@ -80,7 +80,7 @@ class BackupThread(BorgQtThread):
         excludes (list) a list of all the paths to exclude from the backup.
     """
     def __init__(self, includes, excludes=None, prefix=None):
-        self._process_includes(includes)
+        self.includes = includes
         self._process_excludes(excludes)
         self._process_prefix(prefix)
         super().__init__()
@@ -99,12 +99,6 @@ class BackupThread(BorgQtThread):
             self.prefix = prefix + "_"
         else:
             self.prefix = ""
-
-    def _process_includes(self, includes):
-        processed_items = []
-        for item in includes:
-            processed_items.append(item)
-        self.includes = processed_items
 
     def _process_excludes(self, excludes):
         processed_items = []
