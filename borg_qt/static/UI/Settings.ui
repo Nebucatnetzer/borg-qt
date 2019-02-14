@@ -51,8 +51,8 @@
     <widget class="QWidget" name="gridLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>10</y>
+       <x>9</x>
+       <y>3</y>
        <width>541</width>
        <height>296</height>
       </rect>
@@ -174,10 +174,10 @@
     <widget class="QWidget" name="verticalLayoutWidget_3">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>10</y>
+       <x>8</x>
+       <y>31</y>
        <width>541</width>
-       <height>331</height>
+       <height>321</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="layout_include">
@@ -189,7 +189,7 @@
         <item>
          <widget class="QPushButton" name="button_include_file">
           <property name="text">
-           <string>Add file</string>
+           <string>Include file</string>
           </property>
           <property name="icon">
            <iconset>
@@ -200,7 +200,7 @@
         <item>
          <widget class="QPushButton" name="button_include_directory">
           <property name="text">
-           <string>Add folder</string>
+           <string>Include folder</string>
           </property>
           <property name="icon">
            <iconset>
@@ -211,7 +211,7 @@
         <item>
          <widget class="QPushButton" name="button_remove_include">
           <property name="text">
-           <string>Remove</string>
+           <string>Remove entry</string>
           </property>
           <property name="icon">
            <iconset>
@@ -223,6 +223,19 @@
       </item>
      </layout>
     </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>8</y>
+       <width>271</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Files to be included in background backups:</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_exclude">
     <attribute name="title">
@@ -231,10 +244,10 @@
     <widget class="QWidget" name="verticalLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>10</y>
+       <x>8</x>
+       <y>31</y>
        <width>541</width>
-       <height>331</height>
+       <height>321</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="layout_exclude">
@@ -246,7 +259,7 @@
         <item>
          <widget class="QPushButton" name="button_exclude_file">
           <property name="text">
-           <string>Add file</string>
+           <string>Exclude file</string>
           </property>
           <property name="icon">
            <iconset>
@@ -257,7 +270,7 @@
         <item>
          <widget class="QPushButton" name="button_exclude_directory">
           <property name="text">
-           <string>Add folder</string>
+           <string>Exclude folder</string>
           </property>
           <property name="icon">
            <iconset>
@@ -275,7 +288,7 @@
         <item>
          <widget class="QPushButton" name="button_remove_exclude">
           <property name="text">
-           <string>Remove</string>
+           <string>Remove entry</string>
           </property>
           <property name="icon">
            <iconset>
@@ -286,6 +299,19 @@
        </layout>
       </item>
      </layout>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>8</y>
+       <width>201</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Files excluded from any backups:</string>
+     </property>
     </widget>
    </widget>
   </widget>
