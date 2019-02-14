@@ -92,7 +92,7 @@ class MainWindow(QMainWindow):
     def _check_path(self):
         """Makes sure that the user selected a path to backup."""
         message = ("Please select a file or directory "
-                   "before creating a backup.")
+                   "before taking a backup.")
         if not hasattr(self, 'src_path'):
             raise BorgException(message)
 
@@ -104,7 +104,7 @@ class MainWindow(QMainWindow):
                                        excludes=self.config.excludes,
                                        prefix=self.config.prefix)
             dialog = ProgressDialog(thread)
-            dialog.label_info.setText("Borg-Qt is currently creating a backup.")
+            dialog.label_info.setText("Borg-Qt is currently creating an archive.")
             dialog.exec_()
             self.update_ui()
         except BorgException as e:
@@ -128,7 +128,7 @@ class MainWindow(QMainWindow):
             archive_name = self.selected_archive
             target_path = self._get_target_path()
         except AttributeError:
-            error = BorgException("Please create or select a backup first.")
+            error = BorgException("Please create or select an archive first.")
             archive_name = None
             target_path = None
             show_error(error)
@@ -154,7 +154,7 @@ class MainWindow(QMainWindow):
         try:
             archive_name = self.selected_archive
         except AttributeError:
-            error = BorgException("Please create or select a backup first.")
+            error = BorgException("Please create or select an archive first.")
             archive_name = None
             show_error(error)
 
@@ -212,7 +212,7 @@ class MainWindow(QMainWindow):
         try:
             archive_name = self.selected_archive
         except AttributeError:
-            error = BorgException("Please create or select a backup first.")
+            error = BorgException("Please create or select an archive first.")
             archive_name = None
             show_error(error)
 
