@@ -74,6 +74,9 @@ class MainWindow(QMainWindow):
         super(QMainWindow, self).closeEvent(*args, **kwargs)
         # When the application gets close unmount all the archives and remove
         # their paths.
+        self._umount_archives()
+
+    def _umount_archives(self):
         if self.mount_paths:
             for path in self.mount_paths:
                 if os.path.exists(path):
@@ -98,6 +101,12 @@ class MainWindow(QMainWindow):
 
     def create_backup(self):
         """Creates a backup of the selected item in the treeview."""
+        if self.mount_paths:
+            if self.yes_no("To create an archive you need to unmout all "
+                           "archives. Do you want to continue?"):
+                self._umount_archives()
+            else:
+                return
         try:
             self._check_path()
             thread = borg.BackupThread([self.src_path],
