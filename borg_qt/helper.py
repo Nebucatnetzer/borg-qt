@@ -10,6 +10,16 @@ class BorgException(Exception):
     pass
 
 
+# This was taken from here: https://stackoverflow.com/a/1745965/7723859
+def debug_trace():
+    '''Set a tracepoint in the Python debugger that works with Qt'''
+    from PyQt5.QtCore import pyqtRemoveInputHook
+
+    from pdb import set_trace
+    pyqtRemoveInputHook()
+    set_trace()
+
+
 def show_error(e):
     """Helper function to show an error dialog."""
     message = QMessageBox()
