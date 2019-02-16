@@ -5,7 +5,7 @@ import json
 
 from PyQt5.QtCore import QThread
 
-from helper import BorgException
+from helper import BorgException, show_error
 
 
 class BorgQtThread(QThread):
@@ -46,7 +46,8 @@ class BorgQtThread(QThread):
                 return
             else:
                 err = json.loads(error)
-                raise BorgException(err['message'])
+                show_error(BorgException(err['message']))
+                self.stop()
 
 
 class ListThread(BorgQtThread):
