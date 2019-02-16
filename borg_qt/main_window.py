@@ -82,6 +82,7 @@ class MainWindow(QMainWindow):
                 if os.path.exists(path):
                     os.system('borg umount ' + path)
                     remove_path(path)
+        self.mount_paths = []
 
     def show_settings(self):
         """Display the settings dialog."""
