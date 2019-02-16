@@ -5,7 +5,7 @@ import json
 
 from PyQt5.QtCore import QThread
 
-from helper import BorgException
+from helper import BorgException, show_error
 
 
 class BorgQtThread(QThread):
@@ -105,6 +105,15 @@ class BackupThread(BorgQtThread):
         self.command.extend(self.includes)
         if self.excludes:
             self.command.extend(self.excludes)
+
+    def run(self):
+        self.json_output, self.json_err = self.p.communicate()
+        self.p.wait()
+        try:
+            self.process_json_error(self.json_err)
+        except BorgException as e:
+            show_error(e)
+            self.stop()
 
     def _process_prefix(self, prefix):
         """Prepares the prefix for the final command."""
