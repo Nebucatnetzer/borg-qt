@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python
 
 from PyQt5.QtWidgets import QApplication
 import sys
