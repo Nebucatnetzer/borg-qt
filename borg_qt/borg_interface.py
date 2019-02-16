@@ -43,7 +43,7 @@ class BorgQtThread(QThread):
         if json_err:
             error = json_err.splitlines()[0]
             if 'stale' in error:
-                pass
+                return
             else:
                 err = json.loads(error)
                 raise BorgException(err['message'])
