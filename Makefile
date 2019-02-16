@@ -19,7 +19,7 @@ venv/bin/activate: requirements.txt
 	touch venv/bin/activate
 
 init:
-	rm -rf borg-qt-env
+	rm -rf venv
 	python3 -m venv venv
 	. venv/bin/activate
 	( \
