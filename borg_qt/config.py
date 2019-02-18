@@ -122,6 +122,10 @@ class Config(QDialog):
     def schedule_predefined_name(self):
         return self._return_single_option('schedule_predefined_name')
 
+    @property
+    def hide_help(self):
+        return util.strtobool(self._return_single_option('hide_help'))
+
     def _return_single_option(self, option):
         """Gets the provided option from the configparser object."""
         if option in self.config['borgqt']:

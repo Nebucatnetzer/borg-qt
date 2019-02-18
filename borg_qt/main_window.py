@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import (QMainWindow, QFileSystemModel, QFileDialog,
 from config import Config
 from helper import (BorgException, show_error, convert_size, open_path,
                     create_path, remove_path, check_path)
+from help import Help
 import borg_interface as borg
 from progress import ProgressDialog
 
@@ -56,6 +57,7 @@ class MainWindow(QMainWindow):
         self.action_restore.triggered.connect(self.restore_backup)
         self.action_delete.triggered.connect(self.delete_backup)
         self.action_mount.triggered.connect(self.mount_backup)
+        self.action_help.triggered.connect(self.show_help)
 
     def start(self):
         """This method is intendet to be used only once at the application
@@ -63,6 +65,11 @@ class MainWindow(QMainWindow):
         environment variables."""
         try:
             self.config.read()
+            # show the help window if needed and save it's answer
+            if not self.config.hide_help:
+                self.config.config['borgqt']['hide_help'] = (
+                    str(self.show_help()))
+                self.config.write()
             self.config._set_environment_variables()
             self._update_archives()
             self._update_repository_stats()
@@ -135,6 +142,13 @@ class MainWindow(QMainWindow):
         folder_name = str(dlg.getExistingDirectory(
             self, "Select Directory", os.getenv('HOME')))
         return folder_name
+
+    def show_help(self):
+        """Diplays the help dialog with some informations about the
+        application."""
+        help_window = Help()
+        help_window.exec_()
+        return help_window.check_hide_enabled.isChecked()
 
     @property
     def selected_archive(self):
