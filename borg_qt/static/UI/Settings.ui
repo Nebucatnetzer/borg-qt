@@ -314,6 +314,130 @@
      </property>
     </widget>
    </widget>
+   <widget class="QWidget" name="tab_schedule">
+    <attribute name="title">
+     <string>Schedule</string>
+    </attribute>
+    <widget class="QWidget" name="verticalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>541</width>
+       <height>328</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="layout_schedule">
+      <item>
+       <widget class="QCheckBox" name="check_schedule_enabled">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Enable</string>
+        </property>
+        <property name="autoExclusive">
+         <bool>false</bool>
+        </property>
+        <property name="tristate">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radio_schedule_predefined_enabled">
+        <property name="text">
+         <string>Predefined Schedule</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="combo_schedule_predefined"/>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="layout_schedule_details">
+        <item row="2" column="1">
+         <widget class="QComboBox" name="combo_schedule_weekday"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="QTimeEdit" name="time_schedule_time">
+          <property name="dateTime">
+           <datetime>
+            <hour>0</hour>
+            <minute>0</minute>
+            <second>0</second>
+            <year>2000</year>
+            <month>1</month>
+            <day>1</day>
+           </datetime>
+          </property>
+          <property name="displayFormat">
+           <string>hh:mm</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_schedule_weekday">
+          <property name="text">
+           <string>Weekday:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_schedule_time">
+          <property name="text">
+           <string>At:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_month">
+          <property name="text">
+           <string>Month:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QComboBox" name="combo_schedule_month"/>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_schedule_date">
+          <property name="text">
+           <string>Date:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QSpinBox" name="spin_schedule_date">
+          <property name="minimum">
+           <number>0</number>
+          </property>
+          <property name="maximum">
+           <number>31</number>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="2">
+         <widget class="QRadioButton" name="radio_schedule_custom_enabled">
+          <property name="text">
+           <string>Custom Schedule</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <resources/>

@@ -1,3 +1,4 @@
+import argparse
 import os
 import math
 import shutil
@@ -79,3 +80,16 @@ def check_path(path):
         return True
     exception = Exception("The selected path isn't writeable!")
     show_error(exception)
+
+
+def get_parser():
+    """ The argument parser of the command-line version """
+    parser = argparse.ArgumentParser(
+        description=('Create a backup in the background.'))
+
+    parser.add_argument(
+        '--background',
+        '-B',
+        help='Runs the application without showing the graphical interface.',
+        action='store_true')
+    return parser

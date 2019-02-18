@@ -5,6 +5,7 @@ import shutil
 import unittest
 import warnings
 
+import context
 from main_window import MainWindow
 from helper import remove_path
 
@@ -39,3 +40,8 @@ class BorgInterfaceTest(unittest.TestCase):
 
     def tearDown(self):
         remove_path(self.repository_path)
+
+
+class TestSystemd(unittest.TestCase):
+    def tearDown(self):
+        os.remove(self.path)

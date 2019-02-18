@@ -1,15 +1,23 @@
 #!/usr/bin/env python
 
-from PyQt5.QtWidgets import QApplication
 import sys
+from PyQt5.QtWidgets import QApplication
 
 from main_window import MainWindow
+from helper import get_parser
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
-    window.show()
-    window.start()
+    parser = get_parser()
+    args = parser.parse_args()
 
-    sys.exit(app.exec_())
+    # only show the application if there's no background flag
+    if args.background:
+        window.background_backup()
+    else:
+        window.show()
+        window.start()
+
+        sys.exit(app.exec_())

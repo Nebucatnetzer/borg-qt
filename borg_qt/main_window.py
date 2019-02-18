@@ -89,6 +89,14 @@ class MainWindow(QMainWindow):
         self.config.set_form_values()
         self.config.exec_()
 
+    def background_backup(self):
+        self.config.read()
+        self.config._set_environment_variables()
+        thread = borg.BackupThread(self.config.includes,
+                                   excludes=self.config.excludes,
+                                   prefix=self.config.prefix)
+        thread.run()
+
     def get_selected_path(self, signal):
         """returns the path of the item selected in the file tree."""
         self.src_path = self.treeview_files.model().filePath(signal)
