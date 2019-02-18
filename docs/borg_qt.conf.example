@@ -1,26 +1,38 @@
 [DEFAULT]
 excludes = [
-    "/home/*/.gvfs",
-    "/home/*/.cache",
-    "/home/*/.thumbnails",
-    "/home/*/.dropbox",
-    "/proc",
-    "/sys",
-    "/dev",
-    "/etc/mtab",
-    "/var/cache",
-    "lost+found",
-    "/tmp",
-    "/var/tmp",
-    "/home/*/.local/share/Trash"
-    ]
+	"/home/*/.gvfs",
+	"/home/*/.cache",
+	"/home/*/.thumbnails",
+	"/home/*/.dropbox",
+	"/proc",
+	"/sys",
+	"/dev",
+	"/etc/mtab",
+	"/var/cache",
+	"lost+found",
+	"/tmp",
+	"/var/tmp",
+	"/home/*/.local/share/Trash"
+	]
 port = 22
 
 [borgqt]
 includes = [
-    "/home/username/"
-    ]
-server = 192.168.1.1
-user = borg
+	    "/home/username/"
+	]
 repository_path = /tmp/test-borgqt
 password = foo
+prefix = notebook
+server = 192.168.1.1
+port = 22
+user = borg
+schedule_enabled = False
+schedule_date = 0
+schedule_weekday = 0
+schedule_type = hourly
+schedule_custom_enabled = False
+schedule_month = 0
+schedule_time = 12:00:00
+schedule_predefined_enabled = True
+schedule_predefined_name = hourly
+
