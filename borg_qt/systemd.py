@@ -6,14 +6,19 @@ import subprocess
 class SystemdFile():
     def __init__(self, file_name):
         self.file_name = file_name
-        self.path = os.path.join(os.environ['HOME'],
-                                 '.config/systemd/user/',
+        self.systemd_folder = os.path.join(os.environ['HOME'],
+                                           '.config/systemd/user/')
+        self.path = os.path.join(self.systemd_folder,
                                  self.file_name)
         self.content = configparser.ConfigParser()
         self.content.optionxform = str
         self.content['Unit'] = {}
 
     def write(self):
+        try:
+            os.makedirs(self.systemd_folder)
+        except OSError:
+            pass
         with open(self.path, 'w+') as configfile:
             self.content.write(configfile)
 
