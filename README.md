@@ -96,7 +96,7 @@ repository.
 ### ToDos
 
 To have a look at all the planned tasks you can have a look at the planned
-features here: [todos.org](docs/todos.md)
+features here: [todos.md](docs/todos.md)
 
 ## Used packages
 
