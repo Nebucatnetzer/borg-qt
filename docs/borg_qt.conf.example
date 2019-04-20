@@ -2,6 +2,7 @@
 excludes = [
 	"/home/*/.gvfs",
 	"/home/*/.cache",
+	"/home/*/.dbus",
 	"/home/*/.thumbnails",
 	"/home/*/.dropbox",
 	"/proc",
