@@ -36,7 +36,7 @@ test:
 	@. venv/bin/activate
 	@( \
 	cd tests/; \
-	python3 -m unittest; \
+	pytest; \
 	)
 
 clean: distclean
