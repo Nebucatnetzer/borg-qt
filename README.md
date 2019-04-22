@@ -21,7 +21,7 @@ local machine.
 
 You need to have Borg installed in order to have Borg-Qt working. You can get a
 binary for your operating system here:
-<https://github.com/borgbackup/borg/releases>
+https://github.com/borgbackup/borg/releases
 
 On a Debian based system you can install it by copying to `~/.local/bin/`. Borg
 needs to be able to get executed by calling the command `borg`.
@@ -29,7 +29,8 @@ needs to be able to get executed by calling the command `borg`.
     cp ~/Downloads/borg-linux64 ~/.local/bin/borg
     chmod +x ~/.local/bin/borg
 
-For other systems check their [documenation](https://borgbackup.readthedocs.io/en/stable/).
+For other systems check their
+[documenation](https://borgbackup.readthedocs.io/en/stable/).
 
 ### Installing
 
@@ -63,7 +64,7 @@ Now you should find Borg-Qt in your desktop's start menu.
 ## Development
 
 To start working on Borg-Qt first clone the git repository and install
-BorgBackup as described in [1.2.1].
+BorgBackup as described in [Prerequisites].
 
     git clone https://github.com/borg-qt/borg-qt.git
 
@@ -76,9 +77,9 @@ And activate it.
 
     source venv/bin/activate
 
-Finally you can install the depencies.
+Finally you can install Borg-Qt and it's dependencies.
 
-    pip3 install -r requirements.txt
+    pip3 install -e .
 
 You're now all set to work on Borg-Qt. It's a good idea to run the tests before
 starting. You can do this with the following command from the root of the
@@ -101,7 +102,8 @@ features here: [todos.md](docs/todos.md)
 ## Used packages
 
 -   [PyQt5](https://pyqt.readthedocs.io/en/latest/) - the GUI framework
--   [PyInstaller](https://pyinstaller.readthedocs.io/en/stable/) - used for creating the binary
+-   [PyInstaller](https://pyinstaller.readthedocs.io/en/stable/) - used for
+    creating the binary
 
 ## Contributing
 
@@ -119,7 +121,8 @@ experimental.
 
 ## Authors
 
--   Andreas Zweili - *Initial work* - [Nebucatnetzer](https://github.com/Nebucatnetzer)
+-   Andreas Zweili - *Initial work* -
+    [Nebucatnetzer](https://github.com/Nebucatnetzer)
 
 ## License
 
@@ -128,7 +131,12 @@ for details.
 
 ## Acknowledgments
 
--   Thanks to PurpleBooth for her [README template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2).
--   Thanks to [Back in Time](https://github.com/bit-team/backintime) for the inspiration.
--   Thanks to [Feather Icons](https://github.com/feathericons/feather) for their great icon set.
+- Thanks to PurpleBooth for her [README
+  template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2).
+- Thanks to [Back in Time](https://github.com/bit-team/backintime) for the
+  inspiration.
+- Thanks to [Feather Icons](https://github.com/feathericons/feather) for their
+  great icon set.
+- Thanks to [Kenneth Reitz](https://github.com/kennethreitz/setup.py)  for the
+  example repo for setup.py
 
