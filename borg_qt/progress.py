@@ -1,5 +1,4 @@
 import os
-import time
 
 from PyQt5.QtWidgets import QDialog
 from PyQt5 import uic

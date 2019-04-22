@@ -5,9 +5,8 @@ from time import strftime
 
 from PyQt5.QtWidgets import QApplication
 
-import context
-import borg_interface as borg
-from helper import create_path
+import borg_qt.borg_interface as borg
+from borg_qt.helper import create_path
 
 
 app = QApplication(sys.argv)

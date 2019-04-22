@@ -1,6 +1,6 @@
 import os
 
-from systemd import SystemdFile
+from borg_qt.systemd import SystemdFile
 
 
 def test_write_unit(mock_home, monkeypatch):

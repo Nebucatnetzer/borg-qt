@@ -2,7 +2,7 @@ import argparse
 import os
 import math
 import shutil
-from PyQt5.QtCore import QCoreApplication, QUrl
+from PyQt5.QtCore import QUrl
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtGui import QDesktopServices
 

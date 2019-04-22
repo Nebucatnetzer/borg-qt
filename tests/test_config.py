@@ -9,8 +9,8 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtTest import QTest
 
-from main_window import MainWindow
-from helper import BorgException
+from borg_qt.main_window import MainWindow
+from borg_qt.helper import BorgException
 
 
 app = QApplication(sys.argv)

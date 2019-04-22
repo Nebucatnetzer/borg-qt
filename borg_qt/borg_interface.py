@@ -1,11 +1,9 @@
-import os
-import shutil
 import subprocess
 import json
 
 from PyQt5.QtCore import QThread
 
-from helper import BorgException, show_error
+from borg_qt.helper import BorgException, show_error
 
 
 class BorgQtThread(QThread):

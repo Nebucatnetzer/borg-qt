@@ -3,8 +3,8 @@
 import sys
 from PyQt5.QtWidgets import QApplication
 
-from main_window import MainWindow
-from helper import get_parser
+from borg_qt.main_window import MainWindow
+from borg_qt.helper import get_parser
 
 
 if __name__ == "__main__":

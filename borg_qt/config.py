@@ -9,8 +9,8 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QFileDialog
 from PyQt5 import uic
 
-from helper import BorgException
-from systemd import SystemdFile
+from borg_qt.helper import BorgException
+from borg_qt.systemd import SystemdFile
 
 
 class Config(QDialog):

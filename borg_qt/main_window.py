@@ -6,12 +6,12 @@ from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import (QMainWindow, QFileSystemModel, QFileDialog,
                              QMessageBox)
 
-from config import Config
-from helper import (BorgException, show_error, convert_size, open_path,
-                    create_path, remove_path, check_path)
-from help import Help
-import borg_interface as borg
-from progress import ProgressDialog
+from borg_qt.config import Config
+from borg_qt.helper import (BorgException, show_error, convert_size, open_path,
+                            create_path, remove_path, check_path)
+from borg_qt.help import Help
+import borg_qt.borg_interface as borg
+from borg_qt.progress import ProgressDialog
 
 
 class MainWindow(QMainWindow):
