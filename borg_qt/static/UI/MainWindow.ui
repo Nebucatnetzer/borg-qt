@@ -56,7 +56,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Archives</string>
+        <string>Archives in Repository:</string>
        </property>
       </widget>
      </item>
