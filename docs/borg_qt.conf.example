@@ -26,6 +26,14 @@ schedule_month = 0
 schedule_time = 12:00:00
 schedule_predefined_enabled = True
 schedule_predefined_name = hourly
+retention_policy_enabled = False
+retention_policy = {
+    "hourly": "24",
+    "daily": "7",
+    "weekly": "4",
+    "monthly": "12",
+    "yearly": "1"
+    }
 
 [borgqt]
 includes = [

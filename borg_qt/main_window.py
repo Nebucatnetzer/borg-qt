@@ -99,10 +99,13 @@ class MainWindow(QMainWindow):
     def background_backup(self):
         self.config.read()
         self.config._set_environment_variables()
-        thread = borg.BackupThread(self.config.includes,
+        backup_thread = borg.BackupThread(self.config.includes,
                                    excludes=self.config.excludes,
                                    prefix=self.config.prefix)
-        thread.run()
+        backup_thread.run()
+        if self.config.retention_policy_enabled:
+            prune_thread = borg.PruneThread(self.config.retention_policy)
+            prune_thread.run()
 
     def get_selected_path(self, signal):
         """returns the path of the item selected in the file tree."""
@@ -125,12 +128,19 @@ class MainWindow(QMainWindow):
                 return
         try:
             self._check_path()
-            thread = borg.BackupThread([self.src_path],
+            backup_thread = borg.BackupThread([self.src_path],
                                        excludes=self.config.excludes,
                                        prefix=self.config.prefix)
-            dialog = ProgressDialog(thread)
-            dialog.label_info.setText("Borg-Qt is currently creating an archive.")
-            dialog.exec_()
+            backup_dialog = ProgressDialog(backup_thread)
+            backup_dialog.label_info.setText("Borg-Qt is currently creating an"
+                                             " archive.")
+            backup_dialog.exec_()
+            if self.config.retention_policy_enabled:
+                prune_thread = borg.PruneThread(self.config.retention_policy)
+                prune_dialog = ProgressDialog(prune_thread)
+                prune_dialog.label_info.setText("Borg-Qt is currently pruning "
+                                                "the repository.")
+                prune_dialog.exec_()
             self.update_ui()
         except BorgException as e:
             show_error(e)

@@ -121,3 +121,12 @@ def test_exclude_remove(form):
     form.config.list_exclude.setCurrentRow(0)
     form.config.remove_exclude()
     assert (counter >= form.config.list_exclude.count())
+
+
+def test_retention_config(form):
+    assert form.config.retention_policy_enabled == False
+    assert form.config.retention_policy['hourly'] == '24'
+    assert form.config.retention_policy['daily'] == '7'
+    assert form.config.retention_policy['weekly'] == '4'
+    assert form.config.retention_policy['monthly'] == '12'
+    assert form.config.retention_policy['yearly'] == '1'

@@ -1,4 +1,3 @@
 pyinstaller
 PyQt5
-borgbackup[fuse]==1.1.8
 pytest

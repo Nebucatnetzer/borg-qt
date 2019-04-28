@@ -101,7 +101,7 @@ class BackupThread(BorgQtThread):
         self.command = ['borg', 'create', '--log-json', '--json',
                         ('::'
                          + self.prefix
-                         + '{now:%Y-%m-%d_%H:%M:%S}')]
+                         + '{now:%Y-%m-%d_%H:%M:%S,%f}')]
         self.command.extend(self.includes)
         if self.excludes:
             self.command.extend(self.excludes)
@@ -192,3 +192,24 @@ class MountThread(BorgQtThread):
     def create_command(self):
         self.command = ['borg', 'mount', '--log-json',
                         ('::' + self.archive_name), self.mount_path]
+
+
+class PruneThread(BorgQtThread):
+    """Prunes the repository according to the given retention policy.
+
+    Args:
+        policy (dict) the name of the archive to restore.
+    """
+    def __init__(self, policy):
+        self.policy = self._process_policy(policy)
+        super().__init__()
+
+    def create_command(self):
+        self.command = ['borg', 'prune', '--log-json']
+        self.command.extend(self.policy)
+
+    def _process_policy(self, raw_policy):
+        policy = []
+        for key, value in raw_policy.items():
+            policy.append('--keep-' + key + "=" + value)
+        return policy

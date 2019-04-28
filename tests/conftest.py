@@ -67,3 +67,15 @@ def archives(repository):
 def target_path(tmpdir):
     yield str(tmpdir)
     remove_path(str(tmpdir))
+
+
+@pytest.fixture
+def create_archive():
+    def _create_archive(number_of_turns):
+        while number_of_turns > 0:
+            backup_thread = borg.BackupThread(['.'])
+            backup_thread.run()
+            number_of_turns -= 1
+        list_thread = borg.ListThread()
+        return list_thread.run()
+    return _create_archive
