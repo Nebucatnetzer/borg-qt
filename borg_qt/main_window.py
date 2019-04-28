@@ -120,12 +120,8 @@ class MainWindow(QMainWindow):
 
     def create_backup(self):
         """Creates a backup of the selected item in the treeview."""
-        if self.mount_paths:
-            if self.yes_no("To create an archive you need to unmout all "
-                           "archives. Do you want to continue?"):
-                self._umount_archives()
-            else:
-                return
+        if not self._check_mounts():
+            return
         try:
             self._check_path()
             backup_thread = borg.BackupThread([self.src_path],
@@ -275,6 +271,15 @@ class MainWindow(QMainWindow):
             else:
                 # Opens the path in a file manager
                 open_path(mount_path)
+
+    def _check_mounts(self):
+        if self.mount_paths:
+            if self.yes_no("To proceed you need to unmout all "
+                           "archives. Do you want to continue?"):
+                self._umount_archives()
+                return True
+            else:
+                return False
 
     def yes_no(self, question):
         """Simple yes/no dialog.
