@@ -208,7 +208,7 @@ class MainWindow(QMainWindow):
                     thread = borg.DeleteThread(archive_name)
                     dialog = ProgressDialog(thread)
                     dialog.label_info.setText(
-                        "Borg-Qt is currently deleting a backup.")
+                        "Borg-Qt is currently deleting an archive.")
                     dialog.exec_()
                     self.update_ui()
                 except BorgException as e:
