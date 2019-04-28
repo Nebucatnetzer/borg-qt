@@ -189,6 +189,8 @@ class MainWindow(QMainWindow):
 
     def delete_backup(self):
         """Deletes the selected archive from the repository."""
+        if not self._check_mounts():
+            return
         try:
             archive_name = self.selected_archive
         except AttributeError:
