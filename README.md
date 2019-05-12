@@ -104,6 +104,8 @@ features here: [todos.md](docs/todos.md)
 - [PyInstaller](https://pyinstaller.readthedocs.io/en/stable/) - used for
   creating the binary
 - [pytest](https://docs.pytest.org/en/latest/) - used for testing
+- [pytest-cov](https://pytest-cov.readthedocs.io/en/latest/) - used for
+  coverage analysis
 
 ## Contributing
 
