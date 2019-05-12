@@ -32,7 +32,7 @@
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QTabWidget" name="tab_widget">
+  <widget class="QTabWidget" name="tab_policy">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -430,6 +430,131 @@
          <widget class="QRadioButton" name="radio_schedule_custom_enabled">
           <property name="text">
            <string>Custom Schedule</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Retention Policy</string>
+    </attribute>
+    <widget class="QWidget" name="verticalLayoutWidget_4">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>541</width>
+       <height>191</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="layout_policy">
+      <item>
+       <widget class="QCheckBox" name="check_policy_enabled">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Enable</string>
+        </property>
+        <property name="autoExclusive">
+         <bool>false</bool>
+        </property>
+        <property name="tristate">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="layout_policy_details">
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_policy_daily">
+          <property name="text">
+           <string>Daily:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSpinBox" name="spin_policy_daily">
+          <property name="minimum">
+           <number>0</number>
+          </property>
+          <property name="value">
+           <number>7</number>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QSpinBox" name="spin_policy_weekly">
+          <property name="minimum">
+           <number>0</number>
+          </property>
+          <property name="value">
+           <number>4</number>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_policy_hourly">
+          <property name="text">
+           <string>Hourly:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_policy_weekly">
+          <property name="text">
+           <string>Weekly:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_policy_monthly">
+          <property name="text">
+           <string>Monthly:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QSpinBox" name="spin_policy_monthly">
+          <property name="minimum">
+           <number>0</number>
+          </property>
+          <property name="value">
+           <number>12</number>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QSpinBox" name="spin_policy_hourly">
+          <property name="minimum">
+           <number>0</number>
+          </property>
+          <property name="value">
+           <number>24</number>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QSpinBox" name="spin_policy_yearly">
+          <property name="minimum">
+           <number>0</number>
+          </property>
+          <property name="value">
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_policy_yearly">
+          <property name="text">
+           <string>Yearly:</string>
           </property>
          </widget>
         </item>

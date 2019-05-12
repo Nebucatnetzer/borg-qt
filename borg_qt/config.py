@@ -126,6 +126,14 @@ class Config(QDialog):
     def hide_help(self):
         return util.strtobool(self._return_single_option('hide_help'))
 
+    @property
+    def retention_policy_enabled(self):
+        return util.strtobool(self._return_single_option('retention_policy_enabled'))
+
+    @property
+    def retention_policy(self):
+        return self._return_dict_option('retention_policy')
+
     def _return_single_option(self, option):
         """Gets the provided option from the configparser object."""
         if option in self.config['borgqt']:
@@ -140,6 +148,14 @@ class Config(QDialog):
             return json.loads(self.config['borgqt'][option])
         else:
             return []
+
+    def _return_dict_option(self, option):
+        """Reads the provided option from the configparser object and returns
+        it as a dict."""
+        if option in self.config['borgqt']:
+            return json.loads(self.config['borgqt'][option])
+        else:
+            return {}
 
     def _get_path(self):
         """searches for the configuration file and returns its full path."""
@@ -313,6 +329,14 @@ class Config(QDialog):
             self.schedule_predefined_name, Qt.MatchFixedString)
         self.combo_schedule_predefined.setCurrentIndex(index)
         self.spin_schedule_date.setValue(self.schedule_date)
+        if self.retention_policy_enabled:
+            self.check_policy_enabled.setChecked(True)
+        policy = self.retention_policy
+        self.spin_policy_hourly.setValue(int(policy['hourly']))
+        self.spin_policy_daily.setValue(int(policy['daily']))
+        self.spin_policy_weekly.setValue(int(policy['weekly']))
+        self.spin_policy_monthly.setValue(int(policy['monthly']))
+        self.spin_policy_yearly.setValue(int(policy['yearly']))
 
     def apply_options(self):
         """Writes the changed options back into the configparser object."""
@@ -357,6 +381,17 @@ class Config(QDialog):
         self.config['borgqt']['excludes'] = json.dumps(excludes,
                                                        indent=4,
                                                        sort_keys=True)
+        self.config['borgqt']['retention_policy_enabled'] = (
+            str(self.check_policy_enabled.isChecked()))
+        retention_policy = {}
+        retention_policy['hourly'] = self.spin_policy_hourly.text()
+        retention_policy['daily'] = self.spin_policy_daily.text()
+        retention_policy['weekly'] = self.spin_policy_weekly.text()
+        retention_policy['monthly'] = self.spin_policy_monthly.text()
+        retention_policy['yearly'] = self.spin_policy_yearly.text()
+        self.config['borgqt']['retention_policy'] = json.dumps(retention_policy,
+                                                               indent=4,
+                                                               sort_keys=True)
         self._set_environment_variables()
 
         # create and enable the required systemd files

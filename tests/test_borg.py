@@ -57,3 +57,13 @@ def test_mount(target_path, archives):
     assert os.path.exists(
         os.path.join(mount_path, os.path.realpath(__file__)))
     os.system('borg umount ' + mount_path)
+
+
+def test_prune(repository, create_archive):
+    archive_list = create_archive(2)
+    thread = borg.PruneThread({'hourly': '1'})
+    thread.run()
+    list_thread = borg.ListThread()
+    repo_archives = list_thread.run()
+    assert len(archive_list) > len(repo_archives)
+

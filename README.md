@@ -101,9 +101,12 @@ features here: [todos.md](docs/todos.md)
 
 ## Used packages
 
--   [PyQt5](https://pyqt.readthedocs.io/en/latest/) - the GUI framework
--   [PyInstaller](https://pyinstaller.readthedocs.io/en/stable/) - used for
-    creating the binary
+- [PyQt5](https://pyqt.readthedocs.io/en/latest/) - the GUI framework
+- [PyInstaller](https://pyinstaller.readthedocs.io/en/stable/) - used for
+  creating the binary
+- [pytest](https://docs.pytest.org/en/latest/) - used for testing
+- [pytest-cov](https://pytest-cov.readthedocs.io/en/latest/) - used for
+  coverage analysis
 
 ## Contributing
 

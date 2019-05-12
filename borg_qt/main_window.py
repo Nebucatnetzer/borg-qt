@@ -99,10 +99,13 @@ class MainWindow(QMainWindow):
     def background_backup(self):
         self.config.read()
         self.config._set_environment_variables()
-        thread = borg.BackupThread(self.config.includes,
+        backup_thread = borg.BackupThread(self.config.includes,
                                    excludes=self.config.excludes,
                                    prefix=self.config.prefix)
-        thread.run()
+        backup_thread.run()
+        if self.config.retention_policy_enabled:
+            prune_thread = borg.PruneThread(self.config.retention_policy)
+            prune_thread.run()
 
     def get_selected_path(self, signal):
         """returns the path of the item selected in the file tree."""
@@ -117,20 +120,23 @@ class MainWindow(QMainWindow):
 
     def create_backup(self):
         """Creates a backup of the selected item in the treeview."""
-        if self.mount_paths:
-            if self.yes_no("To create an archive you need to unmout all "
-                           "archives. Do you want to continue?"):
-                self._umount_archives()
-            else:
-                return
+        if not self._check_mounts():
+            return
         try:
             self._check_path()
-            thread = borg.BackupThread([self.src_path],
+            backup_thread = borg.BackupThread([self.src_path],
                                        excludes=self.config.excludes,
                                        prefix=self.config.prefix)
-            dialog = ProgressDialog(thread)
-            dialog.label_info.setText("Borg-Qt is currently creating an archive.")
-            dialog.exec_()
+            backup_dialog = ProgressDialog(backup_thread)
+            backup_dialog.label_info.setText("Borg-Qt is currently creating an"
+                                             " archive.")
+            backup_dialog.exec_()
+            if self.config.retention_policy_enabled:
+                prune_thread = borg.PruneThread(self.config.retention_policy)
+                prune_dialog = ProgressDialog(prune_thread)
+                prune_dialog.label_info.setText("Borg-Qt is currently pruning "
+                                                "the repository.")
+                prune_dialog.exec_()
             self.update_ui()
         except BorgException as e:
             show_error(e)
@@ -183,6 +189,8 @@ class MainWindow(QMainWindow):
 
     def delete_backup(self):
         """Deletes the selected archive from the repository."""
+        if not self._check_mounts():
+            return
         try:
             archive_name = self.selected_archive
         except AttributeError:
@@ -198,7 +206,7 @@ class MainWindow(QMainWindow):
                     thread = borg.DeleteThread(archive_name)
                     dialog = ProgressDialog(thread)
                     dialog.label_info.setText(
-                        "Borg-Qt is currently deleting a backup.")
+                        "Borg-Qt is currently deleting an archive.")
                     dialog.exec_()
                     self.update_ui()
                 except BorgException as e:
@@ -265,6 +273,15 @@ class MainWindow(QMainWindow):
             else:
                 # Opens the path in a file manager
                 open_path(mount_path)
+
+    def _check_mounts(self):
+        if self.mount_paths:
+            if self.yes_no("To proceed you need to unmout all "
+                           "archives. Do you want to continue?"):
+                self._umount_archives()
+                return True
+            else:
+                return False
 
     def yes_no(self, question):
         """Simple yes/no dialog.
