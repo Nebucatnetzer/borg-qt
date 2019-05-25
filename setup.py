@@ -20,7 +20,7 @@ VERSION = '2019-02-23'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    'PyQt5', 'borgbackup[fuse]==1.1.8',
+    'PyQt5',
 ]
 
 # What packages are optional?
