@@ -4,10 +4,9 @@ import pytest
 import subprocess
 from shutil import copyfile
 
-import context
-import borg_interface as borg
-from main_window import MainWindow
-from helper import remove_path
+import borg_qt.borg_interface as borg
+from borg_qt.main_window import MainWindow
+from borg_qt.helper import remove_path
 
 
 def example_config():
