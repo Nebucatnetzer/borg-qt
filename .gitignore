@@ -195,3 +195,5 @@ Session.vim
 tags
 
 borg-qt-env/
+.vscode/
+.pytest_cache/
