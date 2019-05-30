@@ -33,10 +33,18 @@ For other systems check their [documenation](https://borgbackup.readthedocs.io/e
 
 ### Installing
 
+1.
 Installing Borg-Qt is very simple. Download the binary for your operating
 system here: <https://github.com/borgqt/borg-qt/releases>
 
-You can then either run it by double clicking on it or by copying it to
+2.
+Copy the config file from docs/borg_qt.conf.example to
+`~/.config/borg_qt/borg_qt.conf` and edit it to contain a valid path to your
+BorgBackup repository and the password. Put all your changes into the
+`[borgqt]` section. As of now there is no automated way to setup Borg-Qt.
+
+3.
+Run the binary by double clicking on it or by copying it to
 `~/.local/bin/` like Borg. If you do that you might want to create a desktop
 file for it. Puth the following code into a `borg-qt.desktop` file in
 `~/.local/share/applications/`.
