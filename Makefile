@@ -24,6 +24,7 @@ init:
 	. venv/bin/activate
 	( \
 	pip3 install -r requirements.txt; \
+	pip3 install -e .; \
 	TEST_REPO=/tmp/test-borgqt; \
 	export BORG_REPO=$$TEST_REPO; \
 	export BORG_PASSPHRASE='foo'; \
