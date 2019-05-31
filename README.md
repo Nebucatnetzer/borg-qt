@@ -26,8 +26,10 @@ https://github.com/borgbackup/borg/releases
 On a Debian based system you can install it by copying to `~/.local/bin/`. Borg
 needs to be able to get executed by calling the command `borg`.
 
+``` bash
     cp ~/Downloads/borg-linux64 ~/.local/bin/borg
     chmod +x ~/.local/bin/borg
+```
 
 For other systems check their
 [documenation](https://borgbackup.readthedocs.io/en/stable/).
@@ -35,7 +37,10 @@ For other systems check their
 ### Installing
 
 1. Installing Borg-Qt is very simple. Download the binary for your operating
-system here: <https://github.com/borgqt/borg-qt/releases>
+system here: <https://github.com/borgqt/borg-qt/releases> or install it with pip:
+``` bash
+pip3 install borg-qt
+```
 
 2. Copy the config file from docs/borg_qt.conf.example to
 `~/.config/borg_qt/borg_qt.conf` and edit it to contain a valid path to your
@@ -60,7 +65,7 @@ MimeType=x-scheme-handler/tg;
 
 Make sure the file is executable:
 
-``` shell
+``` bash
 chmod +x ~/.local/share/applications/borg-qt.desktop
 ```
 
@@ -71,33 +76,45 @@ Now you should find Borg-Qt in your desktop's start menu.
 To start working on Borg-Qt first clone the git repository and install
 BorgBackup as described in [Prerequisites].
 
+```bash
     git clone https://github.com/borg-qt/borg-qt.git
+```
 
 Now create a virtual environment.
 
+```bash
     cd borg-qt
     python3 -m venv venv
+```
 
 And activate it.
 
+```bash
     source venv/bin/activate
+```
 
 Finally you can install Borg-Qt and it's dependencies.
 
+```bash
     pip3 install -e .
+```
 
 You're now all set to work on Borg-Qt. It's a good idea to run the tests before
 starting. You can do this with the following command from the root of the
 repository.
 
+```bash
     make test
+```
 
 To make testing the application while programming a bit easier there's a script
 which reloads the application everytime a file changes in the `borg_qt`
 directory. You to use it run the following command from the root of the
 repository.
 
+```bash
     ./scripts/debugging.sh
+```
 
 ### ToDos
 
