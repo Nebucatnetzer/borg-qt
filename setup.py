@@ -16,7 +16,7 @@ URL = 'https://github.com/borg-qt/borg-qt.git'
 EMAIL = ''
 AUTHOR = 'Andreas Zweili'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '2019-02-23'
+VERSION = '2019.05.30'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
@@ -78,11 +78,16 @@ setup(
     classifiers=[
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
-        'License :: OSI Approved :: GNU Public License v3',
+        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy'
     ],
+    entry_points={                                                              
+        'gui_scripts': [                                                    
+            'borg_qt=borg_qt.__main__:main',                                             
+        ],                                                                      
+    },
 )
