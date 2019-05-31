@@ -1,0 +1,3 @@
+include README.md LICENSE
+include borg_qt/static/icons/*
+include borg_qt/static/UI/*
