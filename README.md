@@ -27,8 +27,8 @@ On a Debian based system you can install it by copying to `~/.local/bin/`. Borg
 needs to be able to get executed by calling the command `borg`.
 
 ``` bash
-    cp ~/Downloads/borg-linux64 ~/.local/bin/borg
-    chmod +x ~/.local/bin/borg
+cp ~/Downloads/borg-linux64 ~/.local/bin/borg
+chmod +x ~/.local/bin/borg
 ```
 
 For other systems check their
@@ -42,9 +42,10 @@ system here: <https://github.com/borgqt/borg-qt/releases> or install it with pip
 pip3 install borg-qt
 ```
 
-2. Copy the config file from docs/borg_qt.conf.example to
-`~/.config/borg_qt/borg_qt.conf` and edit it to contain a valid path to your
-BorgBackup repository and the password. Put all your changes into the
+2. Copy the config file from
+[docs/borg_qt.conf.example](https://github.com/borg-qt/borg-qt/blob/master/docs/borg_qt.conf.example)
+to `~/.config/borg_qt/borg_qt.conf` and edit it to contain a valid path to
+your BorgBackup repository and the password. Put all your changes into the
 `[borgqt]` section. As of now there is no automated way to setup Borg-Qt.
 
 3. Run the binary by double clicking on it or by copying it to
@@ -71,32 +72,36 @@ chmod +x ~/.local/share/applications/borg-qt.desktop
 
 Now you should find Borg-Qt in your desktop's start menu.
 
+If you installed Borg-Qt with pip you can either run `borg_qt` from the
+command line or edit the desktop file to exec `borg_qt` instead of the full
+path.
+
 ## Development
 
 To start working on Borg-Qt first clone the git repository and install
 BorgBackup as described in [Prerequisites].
 
 ```bash
-    git clone https://github.com/borg-qt/borg-qt.git
+git clone https://github.com/borg-qt/borg-qt.git
 ```
 
 Now create a virtual environment.
 
 ```bash
-    cd borg-qt
-    python3 -m venv venv
+cd borg-qt
+python3 -m venv venv
 ```
 
 And activate it.
 
 ```bash
-    source venv/bin/activate
+source venv/bin/activate
 ```
 
 Finally you can install Borg-Qt and it's dependencies.
 
 ```bash
-    pip3 install -e .
+pip3 install -e .
 ```
 
 You're now all set to work on Borg-Qt. It's a good idea to run the tests before
@@ -104,7 +109,7 @@ starting. You can do this with the following command from the root of the
 repository.
 
 ```bash
-    make test
+make test
 ```
 
 To make testing the application while programming a bit easier there's a script
@@ -113,7 +118,7 @@ directory. You to use it run the following command from the root of the
 repository.
 
 ```bash
-    ./scripts/debugging.sh
+./scripts/debugging.sh
 ```
 
 ### ToDos
