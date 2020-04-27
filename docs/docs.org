@@ -1,0 +1,103 @@
+Borg Interface
+
+* Notes
+
+** 2017-10-10 Tue
+
+- https://stackoverflow.com/questions/12042724/securely-storing-passwords-for-use-in-python-script
+- http://pyqt.sourceforge.net/Docs/PyQt5/designer.html
+- https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks
+- http://doc.qt.io/qt-5/designer-quick-start.html
+- https://backintime.readthedocs.io/en/latest/mainwindow.html
+- http://borgbackup.readthedocs.io/en/stable/quickstart.html
+- http://www.bogotobogo.com/Qt/Qt5_QTreeView_QDirModel_ModelView_MVC.php
+
+* Tasks
+
+- [ ] Rewrite the config so that it uses Python directly instead of INI. This
+  way I don't need to parse anything and it should be easy enough to work with
+  for anyone. In addition I can use all the advanced functionality from Python
+  instead of wrestling with the INI format and JSON. Inspired by this
+  post [fn:1]
+- [ ] Remove functional tests from unittests
+- [x] Display help at first run Could be done with a checkbox on the
+  window which gets written to the config file. Something like show_help
+  = False
+- [ ] add the ability to select multiple weekdays
+- [ ] Clean up the Config class, currently all the options get assigned
+  manually, however it would be much better if I could add those
+  programmatically. This way it would be much easier to extend Borg-Qt.
+  One way to to this would be to get all attributes from the class and
+  then filter them so that I only get the list of my attributes and not
+  all of the class (there are a lot of dunder methods). This links might
+  help:
+
+  - https://stackoverflow.com/questions/9058305/getting-attributes-of-a-class#9058322
+  - http://www.codercaste.com/2010/01/11/how-to-filter-lists-in-python/
+  - https://stackoverflow.com/questions/191010/how-to-get-a-complete-list-of-objects-methods-and-attributes
+
+- [ ] bugfixing
+  https://stackoverflow.com/questions/13562501/why-i-get-qtimer-can-only-be-used-with-threads-started-with-qthread-messages-i
+  # Features
+
+- [x] auto-remove snaphots
+
+  - Keep:
+
+    - 1 snapshot / Year
+    - 1 snapshot / Month
+    - 1 snapshot / Week
+    - 1 snapshot / Day
+    - 1 snapshot / Hour
+
+- [ ] setup repository
+- [ ] add prompt when running hypervisor is detected
+
+  - Prompt the user if it detects that a hypervisor, in my case
+    virtualbox is running. This way we would prevent the user from
+    backing up a running VM which then might not work after a restore.
+  - It would probably be nice if it would detect other hyper visors as
+    well. Probably the system will have to ask the user if he wants to
+    run the backup anyway since it might be not possible to determine if
+    borg is backing up vms.
+
+- [x] create backup jobs -> systemd in userhome Should this run
+  borg_interface or should it run borg directly? Might require a lot of
+  parsing.
+
+  - https://pypi.python.org/pypi/systemd_unit/1.0.5
+
+- [ ] change repository
+- [ ] borg_interface add a check to see if borg hangs If it hangs kill
+  it and unlock it on the server.
+
+  - [ ] have a look at the offlineimap script
+
+    - offline imap had the same problem that it hung sometimes however
+      there's a script which detects if it hangs. I could probably use
+      this script.
+
+- [x] allow only one running snapshot Because borg keeps a lock on the
+  repository the application shouldn't allow a second backup to start.
+  Borg throws an exeption if you want to run it again, maybe we can
+  capture it and then won't have to write our own check.
+
+- [ ] search in snapshots for a file this would be really greate if you
+  deleted a file and want ot recover it. Maybe start with the latest
+  snapshot then work backwards.
+
+- [ ] provide all features borg provides
+- [ ] check if connected to home wifi
+  https://stackoverflow.com/questions/15280755/checking-if-i-am-connected-to-a-particular-wifi-network-linux-ubuntu
+
+- [ ] Setup Wizard
+- [ ] Pop Up for Name
+- [ ] Init prompt when repository missing
+- [ ] store backup log in sqlite db, snapshot name is primary key
+- [x] Delete braucht dialog wegen mount
+- [x] Archives in Repository
+- [ ] restore mit wizard machen
+
+* Resources
+
+[fn:1] https://beepb00p.xyz/configs-suck.html
